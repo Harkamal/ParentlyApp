@@ -1,16 +1,15 @@
-// src/components/Loader.js
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import LottieView from 'lottie-react-native';
+import Lottie from 'lottie-react-native'; // Ensure this package is installed
 
-const Loader = () => {
+const Loader = ({ size = 100 }) => {
   return (
     <View style={styles.container}>
-      <LottieView
-        source={require('../../assets/loader.json')} // Path to your Lottie JSON file
+      <Lottie
+        source={require('../../assets/loader.json')} // Update with your loader JSON file path
         autoPlay
         loop
-        style={styles.loader}
+        style={{ width: size, height: size }} // Adjust size here
       />
     </View>
   );
@@ -21,11 +20,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#E7B549',
-  },
-  loader: {
-    width: 200,
-    height: 200,
   },
 });
 

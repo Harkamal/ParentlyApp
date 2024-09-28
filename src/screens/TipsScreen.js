@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, TextInput, TouchableOpacity, Modal, ScrollView, Dimensions } from 'react-native';
 import MarkdownDisplay from '../components/MarkdownDisplay';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import Loader from '../components/Loader'; // Import the Loader component
 
 const { height: screenHeight } = Dimensions.get('window'); // Get screen height
 
@@ -11,6 +12,7 @@ function TipsScreen() {
   const [responseMessage, setResponseMessage] = useState('');
   const [isInvalidAge, setIsInvalidAge] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [loading, setLoading] = useState(false); // State for loading
 
   const handleSubmit = async () => {
     const currentDate = new Date();
@@ -26,8 +28,9 @@ function TipsScreen() {
     }
 
     setIsInvalidAge(false);
-
     const body = { query, child_age: childAge };
+
+    setLoading(true); // Set loading to true when API call starts
 
     try {
       const response = await fetch('http://127.0.0.1:8080/api/parents/assistant', {
@@ -48,6 +51,8 @@ function TipsScreen() {
     } catch (error) {
       console.error('Error:', error);
       setResponseMessage("Sorry! An error occurred while trying to submit your query.");
+    } finally {
+      setLoading(false); // Set loading to false when API call is done
     }
   };
 
@@ -72,22 +77,30 @@ function TipsScreen() {
       )}
 
       <Text style={styles.label}>Type your question:</Text>
+
       <TextInput
         style={styles.textArea}
         value={query}
         onChangeText={setQuery}
         multiline
         numberOfLines={4}
+        placeholder="Can you help me to create a meal plan for my child?" // Placeholder text
+        placeholderTextColor="#4A4A4A" // Optional: Change the color of the placeholder text
       />
+
+
 
       <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
         <Text style={styles.submitButtonText}>Submit</Text>
       </TouchableOpacity>
 
+      {/* Loader */}
+      {loading && <Loader size={50} />}
+
       {/* Response Message Area */}
       {responseMessage && (
         <TouchableOpacity onPress={toggleModal} style={styles.modalOverlay}>
-          <Text style={styles.modalText}>Click here to read the response</Text>
+          <Text style={styles.modalText}>Your advice is here—tap to see!</Text>
         </TouchableOpacity>
       )}
 
