@@ -28,7 +28,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="SplashImage" translatesAutoresizingMaskIntoConstraints="NO" id="vVN-ba-m3T">
-                                <rect key="frame" x="-16" y="-57" width="406" height="752"/>
+                                <rect key="frame" x="-1" y="-49" width="376" height="716"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>

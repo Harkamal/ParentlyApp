@@ -1,31 +1,33 @@
 #import "AppDelegate.h"
-
 #import <React/RCTBundleURLProvider.h>
+#import <React/RCTRootView.h>
+#import "RNSplashScreen.h"  // Import SplashScreen module
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  self.moduleName = @"ParentlyApp";
-  // You can add your custom initial props in the dictionary below.
-  // They will be passed down to the ViewController used by React Native.
-  self.initialProps = @{};
+  // Get the JavaScript code location for React Native
+  NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"]; // Use correct method
 
-  return [super application:application didFinishLaunchingWithOptions:launchOptions];
-}
+  // Initialize the root view
+  RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
+                                                      moduleName:@"ParentlyApp"
+                                               initialProperties:nil
+                                                   launchOptions:launchOptions];
+  rootView.backgroundColor = [UIColor whiteColor];
 
-- (NSURL *)sourceURLForBridge:(RCTBridge *)bridge
-{
-  return [self bundleURL];
-}
+  // Set up the main window
+  self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
+  UIViewController *rootViewController = [UIViewController new];
+  rootViewController.view = rootView;
+  self.window.rootViewController = rootViewController;
+  [self.window makeKeyAndVisible];
 
-- (NSURL *)bundleURL
-{
-#if DEBUG
-  return [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index"];
-#else
-  return [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-#endif
+  // Show the splash screen
+  [RNSplashScreen show];
+
+  return YES;
 }
 
 @end

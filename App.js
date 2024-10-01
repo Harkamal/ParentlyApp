@@ -1,33 +1,23 @@
-import * as React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './src/screens/HomeScreen';
 import TipsScreen from './src/screens/TipsScreen';
-import Loader from './src/components/Loader';
+import SplashScreen from 'react-native-splash-screen'; // Import splash screen
 
 const Tab = createBottomTabNavigator();
 
 function App() {
-  const [loading, setLoading] = React.useState(true);
-
-  React.useEffect(() => {
-    // Remove the timer logic, you can now control this based on app initialization
+  useEffect(() => {
+    // Wait for 3 seconds before hiding the splash screen
     const timer = setTimeout(() => {
-      setLoading(false); // Remove loading based on real conditions in the app
-    }, 2000); // Example short wait time for testing
+      SplashScreen.hide(); // Hide splash screen after 3 seconds
+    }, 1000);
 
-    return () => clearTimeout(timer); // Cleanup
+    return () => clearTimeout(timer); // Cleanup the timer
   }, []);
-
-  if (loading) {
-    return (
-      <View style={styles.container}>
-        <Loader />
-      </View>
-    );
-  }
 
   return (
     <View style={styles.container}>
@@ -45,7 +35,7 @@ function App() {
 
               return <Icon name={iconName} size={size} color={color} />;
             },
-            tabBarActiveTintColor: '#FF6F00', // Orange Color
+            tabBarActiveTintColor: '#FF6F00',
             tabBarInactiveTintColor: 'gray',
           })}
         >
@@ -60,7 +50,7 @@ function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#E7B549', // Global background color
+    backgroundColor: '#E7B549',
   },
 });
 
