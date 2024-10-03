@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Dimensions
 } from 'react-native';
+import { introScreenStyles } from '../styles/styles';
 
 // Get the dimensions of the screen
 const { width, height } = Dimensions.get('window');
@@ -24,10 +25,10 @@ const IntroScreen = ({ navigation }) => {
   return (
     <ImageBackground
       source={backgroundImage}
-      style={styles.backgroundImage}
+      style={introScreenStyles.backgroundImage}
       resizeMode="cover"
     >
-      <View style={styles.overlay}>
+      <View style={introScreenStyles.overlay}>
         {/* The text content */}
        {/* <Text style={styles.description}>
           In the digital age, AI is reshaping how we live, work, and parent.
@@ -38,48 +39,12 @@ const IntroScreen = ({ navigation }) => {
         </Text>*/}
 
         {/* The Continue button */}
-        <TouchableOpacity style={styles.continueButton} onPress={handleContinuePress}>
-          <Text style={styles.continueButtonText}>CONTINUE</Text>
+        <TouchableOpacity style={introScreenStyles.continueButton} onPress={handleContinuePress}>
+          <Text style={introScreenStyles.continueButtonText}>CONTINUE</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
   );
 };
-
-const styles = StyleSheet.create({
-  backgroundImage: {
-    width: width,
-    height: height,
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  overlay: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-  },
-  description: {
-    fontSize: 16,
-    textAlign: 'center',
-    color: '#FFFFFF', // White color for the text
-    marginTop: 200,
-    paddingHorizontal: 30,
-    lineHeight: 24,
-  },
-  continueButton: {
-    backgroundColor: '#76D44A', // Match the green from your design
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    borderRadius: 8,
-  },
-  continueButtonText: {
-    fontSize: 16,
-    color: '#FFFFFF', // White color for the text
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-});
 
 export default IntroScreen;
