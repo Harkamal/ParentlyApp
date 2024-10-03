@@ -1,43 +1,14 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';  // Import Stack Navigator
-import Icon from 'react-native-vector-icons/Ionicons';
-import HomeScreen from './src/screens/HomeScreen';
-import TipsScreen from './src/screens/TipsScreen';
-import IntroScreen from './src/screens/IntroScreen';
 import SplashScreen from 'react-native-splash-screen';
+import { styles } from './src/styles/styles';
+import Tabs from './src/navigation/Tabs';
+import IntroScreen from './src/screens/IntroScreen';
 
 // Create the Stack Navigator
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
-
-// Define your Tab Navigator
-function MyTabs() {
-  return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size }) => {
-          let iconName;
-
-          if (route.name === 'Home') {
-            iconName = 'home';
-          } else if (route.name === 'Tips') {
-            iconName = 'bulb';
-          }
-
-          return <Icon name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: '#FF6F00',
-        tabBarInactiveTintColor: 'gray',
-      })}
-    >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Tips" component={TipsScreen} />
-    </Tab.Navigator>
-  );
-}
 
 // Main App Component
 function App() {
@@ -64,7 +35,7 @@ function App() {
           {/* Then navigate to the main Tab Navigator */}
           <Stack.Screen
             name="Main"
-            component={MyTabs}
+            component={Tabs}
             options={{ headerShown: false }}  // Hide header for Tab Navigator
           />
         </Stack.Navigator>
@@ -72,12 +43,5 @@ function App() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#E7B549',
-  },
-});
 
 export default App;

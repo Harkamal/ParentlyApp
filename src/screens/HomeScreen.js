@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, Animated, StyleSheet, TouchableOpacity } from 'react-native';
+import { homeScreenStyles } from '../styles/styles';
 
 const HomeScreen = ({ navigation }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -52,10 +53,10 @@ const HomeScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={homeScreenStyles.container}>
       <Animated.Text
         style={[
-          styles.welcomeText,
+          homeScreenStyles.welcomeText,
           { opacity: fadeAnim, transform: [{ translateY }] },
         ]}
       >
@@ -64,7 +65,7 @@ const HomeScreen = ({ navigation }) => {
 
       <Animated.Text
         style={[
-          styles.description,
+          homeScreenStyles.description,
           { opacity: fadeAnim, transform: [{ translateY }] },
         ]}
       >
@@ -72,14 +73,14 @@ const HomeScreen = ({ navigation }) => {
       </Animated.Text>
 
       {/* Buttons for navigation */}
-      <View style={styles.buttonContainer}>
+      <View style={homeScreenStyles.buttonContainer}>
         <TouchableOpacity
           onPressIn={handleButtonPressIn}
           onPressOut={handleButtonPressOut}
           onPress={() => navigation.navigate('Tips')}
-          style={styles.button}
+          style={homeScreenStyles.button}
         >
-          <Animated.Text style={[styles.buttonText, { transform: [{ scale: buttonScale }] }]}>
+          <Animated.Text style={[homeScreenStyles.buttonText, { transform: [{ scale: buttonScale }] }]}>
            Ask me anything!
           </Animated.Text>
         </TouchableOpacity>
@@ -87,41 +88,5 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#E7B549',
-  },
-  welcomeText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  description: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 20,
-  },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-  },
-  button: {
-    padding: 10,
-    backgroundColor: '#FF6F00', // Orange button color
-    borderRadius: 5,
-    marginVertical: 5,
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 18,
-    textAlign: 'center',
-  },
-});
 
 export default HomeScreen;
