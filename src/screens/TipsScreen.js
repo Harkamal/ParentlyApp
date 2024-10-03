@@ -1,5 +1,5 @@
 // src/screens/TipsScreen.js
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import Loader from '../components/Loader';
 import { tipsScreenStyles } from '../styles/styles'; // Import styles
 import { postParentingAssistantQuery } from '../api/api'; // Import the API function
+import DeviceInfo from 'react-native-device-info'; // Import DeviceInfo
 
 function TipsScreen() {
   const [childAge, setChildAge] = useState('');
@@ -21,6 +22,18 @@ function TipsScreen() {
   const [isInvalidAge, setIsInvalidAge] = useState(false);
   const [isModalVisible, setModalVisible] = useState(false);
   const [loading, setLoading] = useState(false); // State for loading
+  const [deviceId, setDeviceId] = useState(''); // State for device ID
+
+
+  useEffect(() => {
+    // Get the device ID on component mount
+    const fetchDeviceId = async () => {
+      const id = await DeviceInfo.getUniqueId(); // Get the unique device ID
+      setDeviceId(id);
+    };
+
+    fetchDeviceId();
+  }, []);
 
   const handleSubmit = async () => {
     const currentDate = new Date();
@@ -39,12 +52,12 @@ function TipsScreen() {
     }
 
     setIsInvalidAge(false);
-    const body = { query, child_age: childAge };
+    const body = { query, child_age: childAge, device_id: deviceId };
 
     setLoading(true); // Set loading to true when API call starts
 
     try {
-      const data = await postAssistantQuery(body); // Call the API function
+      const data = await postParentingAssistantQuery(body); // Call the API function
       setResponseMessage(data.message || ""); // Set response message
     } catch (error) {
       console.error('Error:', error);
