@@ -6,7 +6,7 @@ const Loader = ({ size = 100 }) => {
   return (
     <View style={styles.container}>
       <Lottie
-        source={require('../../assets/loader.json')} // Update with your loader JSON file path
+        source={require('../../assets/images/loader.json')} // Update with your loader JSON file path
         autoPlay
         loop
         style={{ width: size, height: size }} // Adjust size here

@@ -1,79 +1,69 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# ParentlyApp
 
-# Getting Started
+## Getting Started
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+### 1. Install Dependencies
 
-## Step 1: Start the Metro Server
-
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
+Run the following command to install all the required dependencies for the project:
 
 ```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
+npm install
 ```
+#### What does npm install do?
+This command reads the package.json file and installs all the necessary packages listed under "dependencies" and "devDependencies".
+It creates a node_modules folder, where the downloaded libraries will be stored, making them available for use in the app.
 
-## Step 2: Start your Application
 
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
+### 2. Install iOS Dependencies
+If you're working on macOS and need to run the iOS version of the app, you also need to install the iOS project dependencies by running:
 
 ```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
+cd ios && pod install
 ```
+#### What does `pod install` do?
+- `pod install` uses CocoaPods to download and integrate iOS-specific libraries. It ensures that all native iOS dependencies like UI components and gesture handlers are properly installed.
+- It creates a `Pods` directory in the `ios` folder, containing all the required libraries and their configurations.
 
-### For iOS
+---
 
+### 3. Run the iOS App
+
+After installing all dependencies, you can start the iOS version of the app using the following command:
 ```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
+npx react-native run-ios
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+#### What does `npx react-native run-ios` do?
+- This command compiles and launches the app in the iOS simulator (or on a connected iOS device if properly set up).
+- It uses Xcode to build the project and runs the app in the development environment for testing.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+---
 
-## Step 3: Modifying your App
+## Libraries Used
 
-Now that you have successfully run the app, let's modify it.
+### Dependencies
+- **@ant-design/icons-react-native**: Provides a set of customizable vector icons specifically for React Native.
+- **@react-navigation/native** & **@react-navigation/bottom-tabs**: These libraries manage navigation within the app and implement a bottom tab navigation structure.
+- **@react-navigation/stack**: Enables stack-based navigation, allowing screens to be pushed and popped from the stack.
+- **lottie-react-native**: Used for animations, providing support for complex animations designed in Lottie.
+- **react-native-gesture-handler**: Provides better gesture handling, enhancing the touch response in React Native apps.
+- **react-native-linear-gradient**: Allows the use of linear gradient backgrounds in the app.
+- **react-native-markdown-display**: Renders Markdown content as styled components in React Native.
+- **react-native-render-html**: Safely renders HTML content in React Native.
+- **react-native-safe-area-context**: Manages safe area views, ensuring the app content doesn't overlap with system bars.
+- **react-native-screens**: Optimizes navigation performance by using native screens for rendering.
+- **react-native-splash-screen**: Handles the splash screen, shown while the app is loading.
+- **react-native-vector-icons**: Offers a wide variety of icons that can be used throughout the app.
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+### Dev Dependencies
+- **@babel/core** & **@babel/preset-env**: Used for transpiling modern JavaScript (ES6+) to a version compatible with older environments.
+- **eslint**: Helps to identify and fix problems in your JavaScript code.
+- **jest**: A testing framework for running unit tests in your app.
+- **typescript**: Provides static typing for JavaScript, helping with catching errors early.
+- **prettier**: A code formatter to ensure consistent style in your codebase.
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
+---
 
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+### Node.js Version
+Make sure you're using Node.js version `>=18`, as specified in the `package.json` file.
+---
