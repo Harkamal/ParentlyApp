@@ -1,10 +1,18 @@
+// src/screens/TipsScreen.js
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TextInput, TouchableOpacity, Modal, ScrollView, Dimensions } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Modal,
+  ScrollView,
+} from 'react-native';
 import MarkdownDisplay from '../components/MarkdownDisplay';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Loader from '../components/Loader';
-import {tipsScreenStyles} from '../styles/styles'; // Import the Loader component
-
+import { tipsScreenStyles } from '../styles/styles'; // Import styles
+import { postParentingAssistantQuery } from '../api/api'; // Import the API function
 
 function TipsScreen() {
   const [childAge, setChildAge] = useState('');
@@ -19,10 +27,13 @@ function TipsScreen() {
     const year = parseInt(childAge.substring(0, 4));
     const month = parseInt(childAge.substring(4, 6));
 
-    if (!/^\d{6}$/.test(childAge) ||
+    // Validate age input
+    if (
+      !/^\d{6}$/.test(childAge) ||
       year > currentDate.getFullYear() ||
-      (year === currentDate.getFullYear() && month > (currentDate.getMonth() + 1)) ||
-      (currentDate.getFullYear() - year > 20)) {
+      (year === currentDate.getFullYear() && month > currentDate.getMonth() + 1) ||
+      currentDate.getFullYear() - year > 20
+    ) {
       setIsInvalidAge(true);
       return;
     }
@@ -33,21 +44,8 @@ function TipsScreen() {
     setLoading(true); // Set loading to true when API call starts
 
     try {
-      const response = await fetch('http://127.0.0.1:8080/api/parents/assistant', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(body),
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setResponseMessage(data.message || ""); // Default to empty string if undefined
-      } else {
-        setResponseMessage("Sorry! Unable to help you now. Please submit your query again.");
-      }
+      const data = await postAssistantQuery(body); // Call the API function
+      setResponseMessage(data.message || ""); // Set response message
     } catch (error) {
       console.error('Error:', error);
       setResponseMessage("Sorry! An error occurred while trying to submit your query.");
@@ -77,18 +75,15 @@ function TipsScreen() {
       )}
 
       <Text style={tipsScreenStyles.label}>Type your question:</Text>
-
       <TextInput
         style={tipsScreenStyles.textArea}
         value={query}
         onChangeText={setQuery}
         multiline
         numberOfLines={4}
-        placeholder="Can you help me to create a meal plan for my child?" // Placeholder text
-        placeholderTextColor="#4A4A4A" // Optional: Change the color of the placeholder text
+        placeholder="Can you help me to create a meal plan for my child?"
+        placeholderTextColor="#4A4A4A"
       />
-
-
 
       <TouchableOpacity style={tipsScreenStyles.submitButton} onPress={handleSubmit}>
         <Text style={tipsScreenStyles.submitButtonText}>Submit</Text>
