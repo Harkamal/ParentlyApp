@@ -64,6 +64,12 @@ npx react-native run-ios
 
 ---
 
+### Using Custom fonts
+Font files are places inside assets/fonts folder. Link them using below command and use the filename as font-family. [Refer](https://docs.expo.dev/develop/user-interface/fonts/)
+```bash
+npx react-native-asset
+```
+
 ### Node.js Version
 Make sure you're using Node.js version `>=18`, as specified in the `package.json` file.
 ---

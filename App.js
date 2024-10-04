@@ -22,23 +22,23 @@ function App() {
   }, []);
 
   return (
-    <View style={styles.container}>
+     <View style={styles.container}>
       <NavigationContainer>
-        {/* Stack Navigator for handling first-time loading of IntroScreen */}
-        <Stack.Navigator>
-          {/* Load IntroScreen first */}
-          <Stack.Screen
-            name="Intro"
-            component={IntroScreen}
-            options={{ headerShown: false }}  // Hide header for IntroScreen
-          />
-          {/* Then navigate to the main Tab Navigator */}
-          <Stack.Screen
-            name="Main"
-            component={Tabs}
-            options={{ headerShown: false }}  // Hide header for Tab Navigator
-          />
-        </Stack.Navigator>
+          {/* Stack Navigator for handling first-time loading of IntroScreen */}
+          <Stack.Navigator>
+            {/* Load IntroScreen first */}
+            <Stack.Screen
+              name="Intro"
+              component={IntroScreen}
+              options={{ headerShown: false }}  // Hide header for IntroScreen
+            />
+            {/* Then navigate to the main Tab Navigator */}
+            <Stack.Screen
+              name="Main"
+              component={Tabs}
+              options={{ headerShown: false }}  // Hide header for Tab Navigator
+            />
+          </Stack.Navigator>
       </NavigationContainer>
     </View>
   );

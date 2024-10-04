@@ -2,18 +2,13 @@ import React from 'react';
 import {
   View,
   Text,
-  ImageBackground,
   TouchableOpacity,
-  StyleSheet,
-  Dimensions
+  Image,
 } from 'react-native';
 import { introScreenStyles } from '../styles/styles';
+import BackgroundWrapper from '../components/BackgroundWrapper';
 
-// Get the dimensions of the screen
-const { width, height } = Dimensions.get('window');
-
-// Path to your background image (add this image to your project's assets folder)
-const backgroundImage = require('../../assets/images/AboutApp.png');
+const roboImage = require('../../assets/images/roboWithSearchBar.png');
 
 const IntroScreen = ({ navigation }) => {
   const handleContinuePress = () => {
@@ -23,27 +18,26 @@ const IntroScreen = ({ navigation }) => {
   };
 
   return (
-    <ImageBackground
-      source={backgroundImage}
-      style={introScreenStyles.backgroundImage}
-      resizeMode="cover"
-    >
-      <View style={introScreenStyles.overlay}>
-        {/* The text content */}
-       {/* <Text style={styles.description}>
-          In the digital age, AI is reshaping how we live, work, and parent.
-          “Parenting by AI” examines how technology supports parents with smart
-          tools like baby monitors, educational apps, and health insights,
-          offering a glimpse into the future of raising children in a
-          tech-driven world.
-        </Text>*/}
-
-        {/* The Continue button */}
-        <TouchableOpacity style={introScreenStyles.continueButton} onPress={handleContinuePress}>
-          <Text style={introScreenStyles.continueButtonText}>CONTINUE</Text>
-        </TouchableOpacity>
+    <BackgroundWrapper>
+      <View style={introScreenStyles.upperContainer}>
+        <Image
+          source={roboImage}
+          style={introScreenStyles.roboImage}
+          resizeMode="contain"
+        />
       </View>
-    </ImageBackground>
+      <View style={introScreenStyles.lowerContainer}>
+        <Text style={introScreenStyles.description}>
+          Parenting made smarter with AI. {"\n"}
+          Get instant answers to your child-related questions and unlock expert insights at your fingertips.
+        </Text>
+      </View>
+      <View style={introScreenStyles.bottomContainer}>
+          <TouchableOpacity style={introScreenStyles.continueButton} onPress={handleContinuePress}>
+            <Text style={introScreenStyles.continueButtonText}>CONTINUE</Text>
+          </TouchableOpacity>
+      </View>
+    </BackgroundWrapper>
   );
 };
 
