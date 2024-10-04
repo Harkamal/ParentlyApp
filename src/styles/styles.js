@@ -35,11 +35,11 @@ export const introScreenStyles = StyleSheet.create({
     paddingHorizontal: 10, // Add some padding for better readability
   },
   description: {
-    fontSize: 18,
-    fontFamily: 'Montserrat-Black', // Assuming you're using custom fonts
+    fontSize: 20,
+    fontFamily: 'Montserrat-Medium', // Assuming you're using custom fonts
     color: '#FFFFFF', // Text color
     textAlign: 'center',
-    lineHeight: 22,
+    lineHeight: 24,
   },
   bottomContainer: {
     flex: 1, // 10% of the screen (1 out of a total of 10)
