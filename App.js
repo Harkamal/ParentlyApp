@@ -22,7 +22,7 @@ function App() {
   }, []);
 
   return (
-    <View style={styles.container}>
+     <View style={styles.container}>
       <NavigationContainer>
           {/* Stack Navigator for handling first-time loading of IntroScreen */}
           <Stack.Navigator>
