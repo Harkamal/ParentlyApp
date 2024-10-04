@@ -2,6 +2,7 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import Markdown from 'react-native-markdown-display';
+import { componentMarkdownStyles } from '../styles/styles';
 
 const MarkdownDisplay = ({ content }) => {
   // Handle undefined content by ensuring it's a string
@@ -13,7 +14,7 @@ const MarkdownDisplay = ({ content }) => {
     .replace(/\\n/g, '\n'); // Handle escaped newlines
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={componentMarkdownStyles.container}>
       <Markdown
         style={{
           text: {
@@ -46,15 +47,5 @@ const MarkdownDisplay = ({ content }) => {
     </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 5,
-    width: '100%',
-  },
-});
 
 export default MarkdownDisplay;

@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
-import Lottie from 'lottie-react-native'; // Ensure this package is installed
+import Lottie from 'lottie-react-native';
+import {componentLoaderStyles} from '../styles/styles'; // Ensure this package is installed
 
 const Loader = ({ size = 100 }) => {
   return (
-    <View style={styles.container}>
+    <View style={componentLoaderStyles.container}>
       <Lottie
         source={require('../../assets/images/loader.json')} // Update with your loader JSON file path
         autoPlay
@@ -14,13 +15,5 @@ const Loader = ({ size = 100 }) => {
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default Loader;

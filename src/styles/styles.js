@@ -18,38 +18,50 @@ export const styles = StyleSheet.create({
 });
 
 export const introScreenStyles = StyleSheet.create({
-  backgroundImage: {
-    width: width,
-    height: height,
-    flex: 1,
+  upperContainer: {
+    flex: 7, // 50% of the screen (5 out of a total of 10)
     justifyContent: 'center',
     alignItems: 'center',
+    paddingTop: '15%',
   },
-  overlay: {
-    flex: 1,
+  roboImage: {
+    width: '100%', // Make the image take the full width of the container
+    height: '100%', // Make the image take the full height of the container
+    resizeMode: 'contain', // Ensure the image scales without losing its aspect ratio
+  },
+  lowerContainer: {
+    flex: 2, // 40% of the screen (4 out of a total of 10)
     justifyContent: 'center',
-    alignItems: 'center',
-    paddingHorizontal: 20,
+    paddingHorizontal: 10, // Add some padding for better readability
   },
   description: {
-    fontSize: 16,
+    fontSize: 18,
+    fontFamily: 'Montserrat-Black', // Assuming you're using custom fonts
+    color: '#FFFFFF', // Text color
     textAlign: 'center',
-    color: '#FFFFFF', // White color for the text
-    marginTop: 200,
-    paddingHorizontal: 30,
-    lineHeight: 24,
+    lineHeight: 22,
+  },
+  bottomContainer: {
+    flex: 1, // 10% of the screen (1 out of a total of 10)
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 20, // Add a little padding at the bottom for the button
   },
   continueButton: {
-    backgroundColor: '#76D44A', // Match the green from your design
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    borderRadius: 8,
+    backgroundColor: '#8DDE0E', // Button background color
+    paddingVertical: 12, // Button height
+    paddingHorizontal: 60, // Button width
+    borderRadius: 10, // Rounded corners
+    shadowColor: 'rgba(113, 190, 1, 0.5)', // Shadow color
+    shadowOffset: { width: 0, height: 4 }, // Shadow offset
+    shadowOpacity: 1,
+    shadowRadius: 4,
+    elevation: 5, // For Android shadow
   },
   continueButtonText: {
-    fontSize: 16,
-    color: '#FFFFFF', // White color for the text
-    fontWeight: 'bold',
-    textAlign: 'center',
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontFamily: 'Montserrat-Bold',
   },
 });
 export const tipsScreenStyles = StyleSheet.create({
@@ -163,7 +175,6 @@ export const homeScreenStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
-    backgroundColor: '#E7B549',
   },
   welcomeText: {
     fontSize: 24,
@@ -192,3 +203,36 @@ export const homeScreenStyles = StyleSheet.create({
     textAlign: 'center',
   },
 });
+
+export const componentMarkdownStyles = StyleSheet.create({
+  container: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 5,
+    width: '100%',
+  },
+});
+
+export const componentLoaderStyles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+export const componentBackgroundWrapperStyles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
+});
+
+export const componentButtonBackgroundStyles = StyleSheet.create({
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
+});
+

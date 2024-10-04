@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { View, Text, Animated, StyleSheet, TouchableOpacity } from 'react-native';
 import { homeScreenStyles } from '../styles/styles';
+import BackgroundWrapper from '../components/BackgroundWrapper';
+
 
 const HomeScreen = ({ navigation }) => {
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -53,7 +55,8 @@ const HomeScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={homeScreenStyles.container}>
+    <BackgroundWrapper>
+      <View style={homeScreenStyles.container}>
       <Animated.Text
         style={[
           homeScreenStyles.welcomeText,
@@ -86,6 +89,7 @@ const HomeScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
     </View>
+    </BackgroundWrapper>
   );
 };
 
