@@ -19,53 +19,46 @@ export const styles = StyleSheet.create({
 
 export const introScreenStyles = StyleSheet.create({
   mainContainer: {
-    flex: 1, // 50% of the screen (5 out of a total of 10)
-    justifyContent: 'center',
+    flex: 1,
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: '25%',
+    paddingHorizontal: 20,
   },
   roboImage: {
-    flex: 7,
-    width: '100%', // Make the image take the full width of the container
-    height: '100%', // Make the image take the full height of the container
-    resizeMode: 'contain', // Ensure the image scales without losing its aspect ratio
-    paddingBottom: '10%',
+    height: height * 0.5,
+    marginTop: height * 0.2, // 10% of screen height as top margin
   },
-  middleContainer: {
-    paddingTop: '12%',
-    flex: 3, // 40% of the screen (4 out of a total of 10)
+  textContainer: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    paddingHorizontal: 10, // Add some padding for better readability
-    paddingBottom: '30%',
+    paddingHorizontal: 20,
+    marginBottom: height * 0.05, // Space below middle section
   },
   description: {
-    fontSize: 20,
-    fontFamily: 'Montserrat-Medium', // Assuming you're using custom fonts
-    color: '#FFFFFF', // Text color
+    fontSize: 17,
+    fontFamily: 'Montserrat-Medium',
+    color: '#FFFFFF',
     textAlign: 'center',
     lineHeight: 24,
+    marginBottom: 30,
   },
   continueButton: {
-    marginTop: 35,
-    backgroundColor: '#8DDE0E', // Button background color
-    paddingVertical: 12, // Button height
-    paddingHorizontal: 60, // Button width
-    borderRadius: 10, // Rounded corners
-    shadowColor: 'rgba(113, 190, 1, 0.5)', // Shadow color
-    shadowOffset: { width: 0, height: 4 }, // Shadow offset
-    shadowOpacity: 1,
-    shadowRadius: 4,
-    elevation: 5, // For Android shadow
+    backgroundColor: '#8DDE0E',
+    borderRadius: 30,
+    paddingVertical: 12,
+    paddingHorizontal: 40,
+    elevation: 3,
   },
   continueButtonPressed: {
     backgroundColor: '#4CAF50',
-    transform: [{ scale: 0.95 }],
   },
   continueButtonText: {
-    color: '#FFFFFF',
     fontSize: 18,
+    fontWeight: '600',
+    color: '#FFFFFF',
     fontFamily: 'Montserrat-Bold',
+    textAlign: 'center',
   },
 });
 export const tipsScreenStyles = StyleSheet.create({

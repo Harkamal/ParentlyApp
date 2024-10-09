@@ -28,7 +28,7 @@ const IntroScreen = ({ navigation }) => {
           style={introScreenStyles.roboImage}
           resizeMode="contain"
         />
-        <View style={introScreenStyles.middleContainer}>
+        <View style={introScreenStyles.textContainer}>
           <Text style={introScreenStyles.description}>
             Parenting made smarter with AI. {"\n"}
             Get instant answers to your child-related questions and unlock expert insights at your fingertips.
