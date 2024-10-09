@@ -21,6 +21,12 @@ function GuestUserQuestionScreen() {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
 
+  const trendingQuestions = [
+    'What are some healthy snack options for toddlers that are easy to prepare?',
+    'How much screen time is appropriate for my child, and what are some educational shows I can let them watch?',
+    'What are some fun indoor activities to help my child develop motor skills?',
+  ];
+
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -52,6 +58,10 @@ function GuestUserQuestionScreen() {
     return date ? new Intl.DateTimeFormat('en-US', options).format(date) : "Select Child's Age";
   };
 
+  const handleTrendingQuestionPress = (selectedQuestion) => {
+    setQuestion(selectedQuestion);
+  };
+
   return (
     <KeyboardAvoidingView style={styles.mainContainer}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -69,7 +79,7 @@ function GuestUserQuestionScreen() {
             <Text style={styles.label}>Your Question</Text>
           </View>
           <TextInput
-            style={[styles.inputField,styles.inputContainer, styles.scrollableInput]} // Dynamically grow height
+            style={[styles.inputField, styles.inputContainer, styles.scrollableInput]} // Dynamically grow height
             placeholder="Write Your Question Here..."
             value={question}
             onChangeText={setQuestion}
@@ -80,9 +90,22 @@ function GuestUserQuestionScreen() {
             <Text style={styles.submitButtonText}>SUBMIT</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.trendingQuestionsContainer}></View>
       </ScrollView>
-
+      <View style={styles.trendingQuestionsContainer}>
+        <View style={styles.questionHeaderContainer}>
+          <Text style={styles.trendingQuestionsHeader}>Trending Questions</Text>
+        </View>
+        {trendingQuestions.map((item, index) => (
+          <TouchableOpacity key={index} onPress={() => handleTrendingQuestionPress(item)} style={styles.questionContainer}>
+            <View style={styles.questionRow}>
+              <Text style={styles.trendingQuestion}>{item}</Text>
+              <View style={styles.arrowIconContainer}>
+                <Text style={styles.arrowColor}> > </Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </View>
       <DateTimePickerModal
         isVisible={isDatePickerVisible}
         mode="date"
@@ -106,7 +129,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(184, 245, 244, 1)',
   },
   formContainer: {
-    backgroundColor: '#FFFFFF',
+    position: 'absolute',
+    top: height * 0.18,
+    width: '100%',
     borderRadius: 10,
     paddingVertical: 12,
     elevation: 2,
@@ -148,7 +173,6 @@ const styles = StyleSheet.create({
   },
   scrollableInput: {
     height: 80, // Set a maximum height to restrict the growth of the input field
-    overflow: 'hidden', // Ensure that content does not push other elements down
   },
   submitButton: {
     width: width * 0.5,
@@ -168,6 +192,47 @@ const styles = StyleSheet.create({
   },
   trendingQuestionsContainer: {
     backgroundColor: '#eff9ff',
+    padding: 15,
+  },
+  questionHeaderContainer: {
+    borderBottomWidth: 1, // Change to 1 or desired thickness
+    borderBottomColor: '#5b5b5b', // Border color for division
+    paddingVertical: 10, // Padding above and below the text
+  },
+  trendingQuestionsHeader: {
+    color: '#5b5b5b',
+    fontSize: 18,
+    fontFamily: 'Montserrat-Bold',
+    marginBottom: 10,
+  },
+  questionContainer: {
+    borderBottomWidth: 1, // Change to 1 or desired thickness
+    borderBottomColor: '#5b5b5b', // Border color for division
+    paddingVertical: 10, // Padding above and below the text
+  },
+  questionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  arrowIconContainer: {
+    backgroundColor: '#4dc4f1', // Circle background color
+    borderRadius: 20, // Make it a circle
+    padding: 5, // Padding inside the circle
+    marginRight: 20, // Space between icon and question text
+  },
+  arrowColor: {
+    color: '#84e8f8',
+  },
+  arrowIcon: {
+    width: 20,
+    height: 20, // Adjust size as necessary
+  },
+  trendingQuestion: {
+    width: width * 0.8,
+    color: '#5b5b5b',
+    fontSize: 16,
+    fontFamily: 'Montserrat-Medium',
+    paddingVertical: 5, // Add padding above and below each question
   },
 });
 
