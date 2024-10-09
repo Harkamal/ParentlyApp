@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import profileImage from '../../assets/images/Profile.png';
+import helloImage from '../../assets/images/icHi.png';
 
 const { width, height } = Dimensions.get('window');
 
@@ -68,6 +69,13 @@ function GuestUserQuestionScreen() {
         <Image source={profileImage} style={styles.profileImage} resizeMode="cover" />
 
         <View style={styles.formContainer}>
+          <Text style={styles.helloGreeting}>
+            Hello Parents!
+            <Image source={helloImage} style={styles.helloImage} />
+          </Text>
+          <Text style={styles.helloText}>
+            I’m here to help! Please share your questions about your child below.
+          </Text>
           <View style={styles.labelContainer}>
             <Text style={styles.label}>Child's Age</Text>
           </View>
@@ -119,6 +127,19 @@ function GuestUserQuestionScreen() {
 }
 
 const styles = StyleSheet.create({
+  helloGreeting: {
+    color: '#5b5b5b',
+    fontSize: 18,
+    fontFamily: 'Montserrat-Bold',
+    left: 65,
+  },
+  helloText: {
+    color: '#5b5b5b',
+    fontSize: 14,
+    fontFamily: 'Montserrat-Bold',
+    left: 65,
+    width: width * 0.8,
+  },
   mainContainer: {
     flex: 1,
   },
@@ -130,10 +151,10 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     position: 'absolute',
-    top: height * 0.18,
+    top: height * 0.07,
     width: '100%',
     borderRadius: 10,
-    paddingVertical: 12,
+    paddingVertical: 0,
     elevation: 2,
     paddingHorizontal: 20,
     marginBottom: height * 0.05,
@@ -144,7 +165,7 @@ const styles = StyleSheet.create({
     left: 5,
     backgroundColor: '#84e8f8', // Blue background color
     borderRadius: 10,
-    paddingVertical: 5,
+    paddingVertical: 0,
     paddingHorizontal: 10,
     alignSelf: 'flex-start',
   },
@@ -192,7 +213,8 @@ const styles = StyleSheet.create({
   },
   trendingQuestionsContainer: {
     backgroundColor: '#eff9ff',
-    padding: 15,
+    paddingLeft: 15,
+    padding: 5,
   },
   questionHeaderContainer: {
     borderBottomWidth: 1, // Change to 1 or desired thickness
