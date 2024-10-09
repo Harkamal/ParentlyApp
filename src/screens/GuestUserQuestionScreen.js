@@ -7,12 +7,10 @@ import {
   TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
-  Platform,
   Image,
   Dimensions,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import BackgroundWrapper from '../components/BackgroundWrapper';
 import profileImage from '../../assets/images/Profile.png';
 
 const { width, height } = Dimensions.get('window');
@@ -60,10 +58,16 @@ function GuestUserQuestionScreen() {
         <Image source={profileImage} style={styles.profileImage} resizeMode="cover" />
 
         <View style={styles.formContainer}>
+          <View style={styles.labelContainer}>
+            <Text style={styles.label}>Child's Age</Text>
+          </View>
           <TouchableOpacity onPress={showDatePicker} style={styles.inputContainer}>
             <Text style={styles.inputField}>{formatDate(selectedDate)}</Text>
           </TouchableOpacity>
 
+          <View style={styles.labelContainer}>
+            <Text style={styles.label}>Your Question</Text>
+          </View>
           <TextInput
             style={[styles.inputField,styles.inputContainer, { height: Math.max(60, question.length / 40 * 30) }]} // Dynamically grow height
             placeholder="Write Your Question Here..."
@@ -75,9 +79,7 @@ function GuestUserQuestionScreen() {
             <Text style={styles.submitButtonText}>SUBMIT</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.trendingQuestionsContainer}>
-
-        </View>
+        <View style={styles.trendingQuestionsContainer}></View>
       </ScrollView>
 
       <DateTimePickerModal
@@ -105,14 +107,23 @@ const styles = StyleSheet.create({
   formContainer: {
     backgroundColor: '#FFFFFF',
     borderRadius: 10,
-   // marginBottom: 20,
-    //paddingHorizontal: 15,
     paddingVertical: 12,
     elevation: 2,
-
     paddingHorizontal: 20,
     marginBottom: height * 0.05,
-
+  },
+  labelContainer: {
+    backgroundColor: '#007BFF', // Blue background color
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    marginBottom: -5, // Overlap with input field border
+    alignSelf: 'flex-start',
+  },
+  label: {
+    color: '#FFFFFF', // White text color
+    fontSize: 16,
   },
   inputContainer: {
     backgroundColor: '#FFFFFF', // Set a light background color
@@ -141,9 +152,6 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 40,
     elevation: 3,
-  },
-  submitButtonPressed: {
-    backgroundColor: '#4CAF50',
   },
   submitButtonText: {
     fontSize: 18,
