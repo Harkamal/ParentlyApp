@@ -8,10 +8,14 @@ import {
   ScrollView,
   KeyboardAvoidingView,
   Platform,
+  Image,
+  Dimensions,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import BackgroundWrapper from '../components/BackgroundWrapper';
+import profileImage from '../../assets/images/Profile.png';
+
+const { width, height } = Dimensions.get('window');
 
 function GuestUserQuestionScreen() {
   const [childAge, setChildAge] = useState('');
@@ -51,122 +55,105 @@ function GuestUserQuestionScreen() {
   };
 
   return (
-    <BackgroundWrapper>
-    <KeyboardAvoidingView
-      style={{ flex: 1 }}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
+    <KeyboardAvoidingView style={styles.mainContainer}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.topContainer}>
-          <LinearGradient
-            colors={['rgba(181, 235, 254, 1)', 'rgba(187, 255, 234, 1)']}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 0, y: 1 }}
-            style={styles.gradient}
-          >
-            <View style={styles.header}>
-              <Text style={styles.greetingText}>Ask me anything</Text>
-            </View>
-          </LinearGradient>
-        </View>
+        <Image source={profileImage} style={styles.profileImage} resizeMode="cover" />
 
-        <View style={styles.middleContainer}>
+        <View style={styles.formContainer}>
           <TouchableOpacity onPress={showDatePicker} style={styles.inputContainer}>
             <Text style={styles.inputField}>{formatDate(selectedDate)}</Text>
           </TouchableOpacity>
 
-          <View style={styles.inputContainer}>
-            <TextInput
-              style={[styles.inputField, { height: Math.max(60, question.length / 40 * 30) }]} // Dynamically grow height
-              placeholder="Write Your Question Here..."
-              value={question}
-              onChangeText={setQuestion}
-              multiline={true}
-            />
-          </View>
-
+          <TextInput
+            style={[styles.inputField,styles.inputContainer, { height: Math.max(60, question.length / 40 * 30) }]} // Dynamically grow height
+            placeholder="Write Your Question Here..."
+            value={question}
+            onChangeText={setQuestion}
+            multiline={true}
+          />
           <TouchableOpacity style={styles.submitButton}>
             <Text style={styles.submitButtonText}>SUBMIT</Text>
           </TouchableOpacity>
         </View>
+        <View style={styles.trendingQuestionsContainer}>
 
-        <DateTimePickerModal
-          isVisible={isDatePickerVisible}
-          mode="date"
-          onConfirm={handleConfirm}
-          onCancel={hideDatePicker}
-          maximumDate={new Date()}
-          date={selectedDate || new Date()}
-        />
+        </View>
       </ScrollView>
+
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="date"
+        onConfirm={handleConfirm}
+        onCancel={hideDatePicker}
+        maximumDate={new Date()}
+        date={selectedDate || new Date()}
+      />
     </KeyboardAvoidingView>
-    </BackgroundWrapper>
   );
 }
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+  },
   scrollContainer: {
     flexGrow: 1,
-    justifyContent: 'space-between', // Ensure button stays in place
   },
-  topContainer: {
-    flex: 3,
-    overflow: 'hidden',
+  profileImage: {
+    backgroundColor: 'rgba(184, 245, 244, 1)',
   },
+  formContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+   // marginBottom: 20,
+    //paddingHorizontal: 15,
+    paddingVertical: 12,
+    elevation: 2,
 
-  header: {
-    marginTop: 50,
     paddingHorizontal: 20,
-    alignItems: 'center',
-  },
-  greetingText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  middleContainer: {
-    flex: 2,
-    backgroundColor: 'white',
-    paddingHorizontal: 20,
-    justifyContent: 'center',
+    marginBottom: height * 0.05,
+
   },
   inputContainer: {
-    backgroundColor: '#F5F5F5',
-    borderRadius: 10,
-    marginBottom: 20,
-    paddingHorizontal: 15,
-    paddingVertical: 12,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 2 },
-    shadowRadius: 4,
-    elevation: 2,
-    width: '80%',
-    alignSelf: 'center',
+    backgroundColor: '#FFFFFF', // Set a light background color
+    borderColor: '#FFFFFF', // Set border color
+    shadowColor: '#84e8f8',
+    borderWidth: 1, // Border width
+    borderRadius: 20, // Rounded corners
+    padding: 15, // Inner padding
+    marginBottom: 15, // Space below the input field
+    shadowOffset: {
+      width: 2,
+      height: 7, // Move shadow downwards
+    },
+    shadowOpacity: 1, // Shadow opacity
+    elevation: 5, // For Android shadow
   },
   inputField: {
     fontSize: 16,
     color: '#333',
   },
   submitButton: {
-    backgroundColor: '#8DDE0E',
-    paddingVertical: 12,
-    paddingHorizontal: 60,
-    borderRadius: 10,
-    shadowColor: 'rgba(113, 190, 1, 0.5)',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 4,
-    elevation: 5,
-    width: '60%',
+    width: width * 0.5,
     alignSelf: 'center',
-    marginBottom: 20, // Ensure spacing from bottom
+    backgroundColor: '#8DDE0E',
+    borderRadius: 30,
+    paddingVertical: 12,
+    paddingHorizontal: 40,
+    elevation: 3,
+  },
+  submitButtonPressed: {
+    backgroundColor: '#4CAF50',
   },
   submitButtonText: {
-    color: '#FFFFFF',
     fontSize: 18,
+    fontWeight: '600',
+    color: '#FFFFFF',
     fontFamily: 'Montserrat-Bold',
     textAlign: 'center',
+  },
+  trendingQuestionsContainer: {
+    backgroundColor: '#eff9ff',
   },
 });
 
