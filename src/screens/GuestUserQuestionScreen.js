@@ -69,11 +69,12 @@ function GuestUserQuestionScreen() {
             <Text style={styles.label}>Your Question</Text>
           </View>
           <TextInput
-            style={[styles.inputField,styles.inputContainer, { height: Math.max(60, question.length / 40 * 30) }]} // Dynamically grow height
+            style={[styles.inputField,styles.inputContainer, styles.scrollableInput]} // Dynamically grow height
             placeholder="Write Your Question Here..."
             value={question}
             onChangeText={setQuestion}
             multiline={true}
+            scrollEnabled={true}
           />
           <TouchableOpacity style={styles.submitButton}>
             <Text style={styles.submitButtonText}>SUBMIT</Text>
@@ -113,21 +114,22 @@ const styles = StyleSheet.create({
     marginBottom: height * 0.05,
   },
   labelContainer: {
-    backgroundColor: '#007BFF', // Blue background color
-    borderTopLeftRadius: 10,
-    borderTopRightRadius: 10,
+    top: 10,
+    zIndex: 1,
+    left: 5,
+    backgroundColor: '#84e8f8', // Blue background color
+    borderRadius: 10,
     paddingVertical: 5,
     paddingHorizontal: 10,
-    marginBottom: -5, // Overlap with input field border
     alignSelf: 'flex-start',
   },
   label: {
-    color: '#FFFFFF', // White text color
+    color: '#3d7b85', // White text color
     fontSize: 16,
   },
   inputContainer: {
     backgroundColor: '#FFFFFF', // Set a light background color
-    borderColor: '#FFFFFF', // Set border color
+    borderColor: '#d3f9ff', // Set border color
     shadowColor: '#84e8f8',
     borderWidth: 1, // Border width
     borderRadius: 20, // Rounded corners
@@ -143,6 +145,10 @@ const styles = StyleSheet.create({
   inputField: {
     fontSize: 16,
     color: '#333',
+  },
+  scrollableInput: {
+    height: 80, // Set a maximum height to restrict the growth of the input field
+    overflow: 'hidden', // Ensure that content does not push other elements down
   },
   submitButton: {
     width: width * 0.5,
