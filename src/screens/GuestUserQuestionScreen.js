@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -13,14 +13,51 @@ import {
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import profileImage from '../../assets/images/Profile.png';
 import helloImage from '../../assets/images/icHi.png';
+import DeviceInfo from 'react-native-device-info';
+import {postParentingAssistantQuery} from '../api/api';
+import {tipsScreenStyles} from '../styles/styles';
+import Loader from '../components/Loader'; // Import DeviceInfo
 
 const { width, height } = Dimensions.get('window');
 
+
 function GuestUserQuestionScreen() {
-  const [childAge, setChildAge] = useState('');
-  const [question, setQuestion] = useState('');
+  const [responseMessage, setResponseMessage] = useState('');
+  const [loading, setLoading] = useState(false); // State for loading
+  const [deviceId, setDeviceId] = useState(''); // State for device ID
+  const [childAge, setChildAge] = useState(0);
+  const [query, setQuery] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+
+  useEffect(() => {
+    // Get the device ID on component mount
+    const fetchDeviceId = async () => {
+      const id = await DeviceInfo.getUniqueId(); // Get the unique device ID
+      setDeviceId(id);
+    };
+
+    fetchDeviceId();
+  }, []);
+
+  const handleSubmit = async () => {
+
+
+    const body = { query, child_age: childAge, device_id: deviceId };
+
+    setLoading(true); // Set loading to true when API call starts
+
+    try {
+      const data = await postParentingAssistantQuery(body); // Call the API function
+      setResponseMessage(data.message || ""); // Set response message
+    } catch (error) {
+      console.error('Error:', error);
+      setResponseMessage("Sorry! An error occurred while trying to submit your query.");
+    } finally {
+      setLoading(false); // Set loading to false when API call is done
+    }
+  };
+
 
   const trendingQuestions = [
     'What are some healthy snack options for toddlers that are easy to prepare?',
@@ -46,12 +83,12 @@ function GuestUserQuestionScreen() {
   const calculateAge = (date) => {
     const today = new Date();
     const birthDate = new Date(date);
-    const age = today.getFullYear() - birthDate.getFullYear();
+    const age = (today.getFullYear() - birthDate.getFullYear()) * 12;
     const monthDiff = today.getMonth() - birthDate.getMonth();
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
       return age - 1;
     }
-    return age;
+    return age + monthDiff;
   };
 
   const formatDate = (date) => {
@@ -60,7 +97,7 @@ function GuestUserQuestionScreen() {
   };
 
   const handleTrendingQuestionPress = (selectedQuestion) => {
-    setQuestion(selectedQuestion);
+    setQuery(selectedQuestion);
   };
 
   return (
@@ -89,14 +126,16 @@ function GuestUserQuestionScreen() {
           <TextInput
             style={[styles.inputField, styles.inputContainer, styles.scrollableInput]} // Dynamically grow height
             placeholder="Write Your Question Here..."
-            value={question}
-            onChangeText={setQuestion}
+            value={query}
+            onChangeText={setQuery}
             multiline={true}
             scrollEnabled={true}
           />
-          <TouchableOpacity style={styles.submitButton}>
+          <TouchableOpacity style={styles.submitButton}  onPress={handleSubmit}>
             <Text style={styles.submitButtonText}>SUBMIT</Text>
           </TouchableOpacity>
+          {/* Loader */}
+          {loading && <Loader size={50} />}
         </View>
       </ScrollView>
       <View style={styles.trendingQuestionsContainer}>
