@@ -15,8 +15,8 @@ import profileImage from '../../assets/images/Profile.png';
 import helloImage from '../../assets/images/icHi.png';
 import DeviceInfo from 'react-native-device-info';
 import {postParentingAssistantQuery} from '../api/api';
-import {tipsScreenStyles} from '../styles/styles';
 import Loader from '../components/Loader'; // Import DeviceInfo
+import { useNavigation } from '@react-navigation/native'; // Import the navigation hook
 
 const { width, height } = Dimensions.get('window');
 
@@ -29,7 +29,7 @@ function GuestUserQuestionScreen() {
   const [query, setQuery] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
-
+  const navigation = useNavigation();
   useEffect(() => {
     // Get the device ID on component mount
     const fetchDeviceId = async () => {
@@ -50,6 +50,7 @@ function GuestUserQuestionScreen() {
     try {
       const data = await postParentingAssistantQuery(body); // Call the API function
       setResponseMessage(data.message || ""); // Set response message
+      navigation.navigate('AnswerScreen', { responseMessage: data.message, question: query, childAge: childAge });
     } catch (error) {
       console.error('Error:', error);
       setResponseMessage("Sorry! An error occurred while trying to submit your query.");

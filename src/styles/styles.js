@@ -203,8 +203,7 @@ export const homeScreenStyles = StyleSheet.create({
 
 export const componentMarkdownStyles = StyleSheet.create({
   container: {
-    marginTop: 20,
-    padding: 10,
+    padding: 5,
     backgroundColor: '#FFFFFF',
     borderRadius: 5,
     width: '100%',
