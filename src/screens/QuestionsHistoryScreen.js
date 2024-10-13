@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { getQuestionsHistoryQuery } from '../api/api';
 import Loader from '../components/Loader';
 import { guestUserQuestionScreenStyles } from '../styles/styles';
@@ -48,11 +48,13 @@ function QuestionsHistoryScreen({ route }) {
 
   return (
     <KeyboardAvoidingView style={guestUserQuestionScreenStyles.mainContainer}>
+      <ScrollView contentContainerStyle={guestUserQuestionScreenStyles.scrollContainer}>
       {loading ? (
-        <Loader size={50} /> // Show the loader while loading
-      ) : (
-        <QuestionsWithAnswers questionsWithAnswers={responseMessage} /> // Show the component when the response is ready
-      )}
+          <Loader size={50} /> // Show the loader while loading
+        ) : (
+          <QuestionsWithAnswers questionsWithAnswers={responseMessage} /> // Show the component when the response is ready
+        )}
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
