@@ -5,6 +5,7 @@ import HomeScreen from '../screens/HomeScreen';
 import TipsScreen from '../screens/TipsScreen';
 import { styles } from '../styles/styles';
 import GuestUserQuestionScreen from '../screens/GuestUserQuestionScreen';
+import QuestionsHistoryScreen from '../screens/QuestionsHistoryScreen';
 
 // Create the Tab Navigator
 const Tab = createBottomTabNavigator();
@@ -15,6 +16,7 @@ function Tabs() {
     Guest: 'home',
     Home: 'home',
     Tips: 'bulb',
+    History: 'bulb',
   };
 
   return (
@@ -32,6 +34,7 @@ function Tabs() {
       <Tab.Screen name="Guest" component={GuestUserQuestionScreen} />
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Tips" component={TipsScreen} />
+      <Tab.Screen name="History" component={QuestionsHistoryScreen} />
     </Tab.Navigator>
   );
 }

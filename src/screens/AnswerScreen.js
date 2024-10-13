@@ -1,31 +1,13 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, Dimensions,  TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import MarkdownDisplay from '../components/MarkdownDisplay';
 import { useNavigation } from '@react-navigation/native';
-import {postParentingAssistantQuery} from '../api/api';
-import Loader from '../components/Loader';  // Import useNavigation
 
 const { width, height } = Dimensions.get('window');
 
 function AnswerScreen({ route }) {
-  const [loading, setLoading] = useState(false); // State for loading
   const navigation = useNavigation(); // Initialize navigation
   const { responseMessage, question, childAge } = route.params;
-  const handleSubmit = async () => {
-
-
-    const body = { responseMessage, query: question, child_age: childAge };
-
-    setLoading(true); // Set loading to true when API call starts
-
-    try {
-      const data = await postParentingAssistantQuery(body); // Call the API function
-    } catch (error) {
-      console.error('Error:', error);
-    } finally {
-      setLoading(false); // Set loading to false when API call is done
-    }
-  };
 
   return (
     <View style={styles.mainContainer}>
@@ -45,13 +27,11 @@ function AnswerScreen({ route }) {
         scrollEnabled={true}
       />
       <ScrollView style={styles.responseContainer}>
-        <Text style={styles.tipsHeader}>Tips: Child's Age {childAge} months</Text>
+        {childAge && (
+          <Text style={styles.tipsHeader}>Tips: Child's Age {childAge} months</Text>
+        )}
         <MarkdownDisplay content={responseMessage} />
       </ScrollView>
-      <TouchableOpacity style={styles.submitButton}  onPress={handleSubmit}>
-        <Text style={styles.submitButtonText}>SAVE</Text>
-      </TouchableOpacity>
-      {loading && <Loader size={50} />}
     </View>
   );
 }
@@ -119,22 +99,6 @@ const styles = StyleSheet.create({
   },
   scrollableInput: {
     height: 80,
-  },
-  submitButton: {
-    width: width * 0.5,
-    alignSelf: 'center',
-    backgroundColor: '#8DDE0E',
-    borderRadius: 30,
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    elevation: 3,
-  },
-  submitButtonText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#FFFFFF',
-    fontFamily: 'Montserrat-Bold',
-    textAlign: 'center',
   },
 });
 

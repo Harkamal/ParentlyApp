@@ -40,9 +40,6 @@ function GuestUserQuestionScreen() {
     { label: 'Swedish', value: 'swedish' },
   ]);
 
-  // Trending questions state
-  const [isExpanded, setIsExpanded] = useState(false); // Manage expand/collapse state
-
   useEffect(() => {
     // Get the device ID on component mount
     const fetchDeviceId = async () => {
@@ -69,12 +66,6 @@ function GuestUserQuestionScreen() {
       setLoading(false); // Set loading to false when API call is done
     }
   };
-
-  const trendingQuestions = [
-    'What are some healthy snack options for toddlers that are easy to prepare?',
-    'How much screen time is appropriate for my child, and what are some educational shows I can let them watch?',
-    'What are some fun indoor activities to help my child develop motor skills?',
-  ];
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
