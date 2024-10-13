@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -13,20 +13,59 @@ import {
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import profileImage from '../../assets/images/Profile.png';
 import helloImage from '../../assets/images/icHi.png';
+import DeviceInfo from 'react-native-device-info';
+import {postParentingAssistantQuery} from '../api/api';
+import Loader from '../components/Loader'; // Import DeviceInfo
+import { useNavigation } from '@react-navigation/native'; // Import the navigation hook
+import DropDownPicker from 'react-native-dropdown-picker';
+import { guestUserQuestionScreenStyles } from '../styles/styles';
+import TrendingQuestions from '../components/TrendingQuestions';
 
 const { width, height } = Dimensions.get('window');
 
 function GuestUserQuestionScreen() {
-  const [childAge, setChildAge] = useState('');
-  const [question, setQuestion] = useState('');
+  const [responseMessage, setResponseMessage] = useState('');
+  const [loading, setLoading] = useState(false); // State for loading
+  const [deviceId, setDeviceId] = useState(''); // State for device ID
+  const [childAge, setChildAge] = useState(0);
+  const [query, setQuery] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
+  const navigation = useNavigation();
+  const [open, setOpen] = useState(false);
+  const [language, setLanguage] = useState('english');
+  const [items, setItems] = useState([
+    { label: 'English', value: 'english' },
+    { label: 'Hindi', value: 'hindi' },
+    { label: 'Swedish', value: 'swedish' },
+  ]);
 
-  const trendingQuestions = [
-    'What are some healthy snack options for toddlers that are easy to prepare?',
-    'How much screen time is appropriate for my child, and what are some educational shows I can let them watch?',
-    'What are some fun indoor activities to help my child develop motor skills?',
-  ];
+  useEffect(() => {
+    // Get the device ID on component mount
+    const fetchDeviceId = async () => {
+      const id = await DeviceInfo.getUniqueId(); // Get the unique device ID
+      setDeviceId(id);
+    };
+
+    fetchDeviceId();
+  }, []);
+
+  const handleSubmit = async () => {
+    const body = { query, child_age: childAge, device_id: deviceId, preferredLanguage: language };
+
+    setLoading(true); // Set loading to true when API call starts
+
+    try {
+      const data = await postParentingAssistantQuery(body); // Call the API function
+      setResponseMessage(data.message || ""); // Set response message
+      navigation.navigate('AnswerScreen', { responseMessage: data.message, question: query, childAge: childAge });
+    } catch (error) {
+      console.error('Error:', error);
+      setResponseMessage("Sorry! An error occurred while trying to submit your query.");
+    } finally {
+      setLoading(false); // Set loading to false when API call is done
+    }
+  };
 
   const showDatePicker = () => {
     setDatePickerVisibility(true);
@@ -46,12 +85,12 @@ function GuestUserQuestionScreen() {
   const calculateAge = (date) => {
     const today = new Date();
     const birthDate = new Date(date);
-    const age = today.getFullYear() - birthDate.getFullYear();
+    const age = (today.getFullYear() - birthDate.getFullYear()) * 12;
     const monthDiff = today.getMonth() - birthDate.getMonth();
     if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
       return age - 1;
     }
-    return age;
+    return age + monthDiff;
   };
 
   const formatDate = (date) => {
@@ -59,203 +98,76 @@ function GuestUserQuestionScreen() {
     return date ? new Intl.DateTimeFormat('en-US', options).format(date) : "Select Child's Age";
   };
 
-  const handleTrendingQuestionPress = (selectedQuestion) => {
-    setQuestion(selectedQuestion);
-  };
-
   return (
-    <KeyboardAvoidingView style={styles.mainContainer}>
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <Image source={profileImage} style={styles.profileImage} resizeMode="cover" />
+    <KeyboardAvoidingView style={guestUserQuestionScreenStyles.mainContainer}>
+      <ScrollView contentContainerStyle={guestUserQuestionScreenStyles.scrollContainer}>
+        <Image source={profileImage} style={guestUserQuestionScreenStyles.profileImage} resizeMode="cover" />
 
-        <View style={styles.formContainer}>
-          <Text style={styles.helloGreeting}>
+        <View style={guestUserQuestionScreenStyles.formContainer}>
+          <Text style={guestUserQuestionScreenStyles.helloGreeting}>
             Hello Parents!
-            <Image source={helloImage} style={styles.helloImage} />
+            <Image source={helloImage} style={guestUserQuestionScreenStyles.helloImage} />
           </Text>
-          <Text style={styles.helloText}>
+          <Text style={guestUserQuestionScreenStyles.helloText}>
             I’m here to help! Please share your questions about your child below.
           </Text>
-          <View style={styles.labelContainer}>
-            <Text style={styles.label}>Child's Age</Text>
+          <View style={guestUserQuestionScreenStyles.labelContainer}>
+            <Text style={guestUserQuestionScreenStyles.label}>Child's Age</Text>
           </View>
-          <TouchableOpacity onPress={showDatePicker} style={styles.inputContainer}>
-            <Text style={styles.inputField}>{formatDate(selectedDate)}</Text>
+          <TouchableOpacity onPress={showDatePicker} style={guestUserQuestionScreenStyles.inputContainer}>
+            <Text style={guestUserQuestionScreenStyles.inputField}>{formatDate(selectedDate)}</Text>
           </TouchableOpacity>
 
-          <View style={styles.labelContainer}>
-            <Text style={styles.label}>Your Question</Text>
+          <View style={guestUserQuestionScreenStyles.labelContainer}>
+            <Text style={guestUserQuestionScreenStyles.label}>Your Question</Text>
           </View>
+          <View style={guestUserQuestionScreenStyles.inputContainer}>
           <TextInput
-            style={[styles.inputField, styles.inputContainer, styles.scrollableInput]} // Dynamically grow height
-            placeholder="Write Your Question Here..."
-            value={question}
-            onChangeText={setQuestion}
+            style={[guestUserQuestionScreenStyles.inputField, guestUserQuestionScreenStyles.scrollableInput]} // Dynamically grow height
+            placeholder="Write Your Question Here Or Select From Trending Questions Below..."
+            value={query}
+            onChangeText={setQuery}
             multiline={true}
             scrollEnabled={true}
           />
-          <TouchableOpacity style={styles.submitButton}>
-            <Text style={styles.submitButtonText}>SUBMIT</Text>
+          </View>
+          <View style={guestUserQuestionScreenStyles.labelContainer}>
+            <Text style={guestUserQuestionScreenStyles.label}>Your Preferred Language for the answer</Text>
+          </View>
+          <View style={[guestUserQuestionScreenStyles.inputContainer, open && { zIndex: 1000 }]}>
+            <DropDownPicker
+              open={open}
+              value={language}
+              items={items}
+              setOpen={setOpen}
+              setValue={setLanguage}
+              setItems={setItems}
+              placeholder="Choose a language"
+              style={guestUserQuestionScreenStyles.dropdown}
+              labelStyle={guestUserQuestionScreenStyles.labelStyle}
+            />
+          </View>
+          <TouchableOpacity style={guestUserQuestionScreenStyles.submitButton}  onPress={handleSubmit}>
+            <Text style={guestUserQuestionScreenStyles.submitButtonText}>SUBMIT</Text>
           </TouchableOpacity>
+          {/* Loader */}
+          {loading && <Loader size={50} />}
         </View>
       </ScrollView>
-      <View style={styles.trendingQuestionsContainer}>
-        <View style={styles.questionHeaderContainer}>
-          <Text style={styles.trendingQuestionsHeader}>Trending Questions</Text>
-        </View>
-        {trendingQuestions.map((item, index) => (
-          <TouchableOpacity key={index} onPress={() => handleTrendingQuestionPress(item)} style={styles.questionContainer}>
-            <View style={styles.questionRow}>
-              <Text style={styles.trendingQuestion}>{item}</Text>
-              <View style={styles.arrowIconContainer}>
-                <Text style={styles.arrowColor}> > </Text>
-              </View>
-            </View>
-          </TouchableOpacity>
-        ))}
-      </View>
+
+      {/* Trending Questions Section */}
+      <TrendingQuestions query={query} setQuery={setQuery}/>
+
       <DateTimePickerModal
-        isVisible={isDatePickerVisible}
-        mode="date"
-        onConfirm={handleConfirm}
-        onCancel={hideDatePicker}
-        maximumDate={new Date()}
-        date={selectedDate || new Date()}
-      />
+              isVisible={isDatePickerVisible}
+              mode="date"
+              onConfirm={handleConfirm}
+              onCancel={hideDatePicker}
+              maximumDate={new Date()}
+              date={selectedDate || new Date()}
+            />
     </KeyboardAvoidingView>
   );
 }
-
-const styles = StyleSheet.create({
-  helloGreeting: {
-    color: '#5b5b5b',
-    fontSize: 18,
-    fontFamily: 'Montserrat-Bold',
-    left: 65,
-  },
-  helloText: {
-    color: '#5b5b5b',
-    fontSize: 14,
-    fontFamily: 'Montserrat-Bold',
-    left: 65,
-    width: width * 0.8,
-  },
-  mainContainer: {
-    flex: 1,
-  },
-  scrollContainer: {
-    flexGrow: 1,
-  },
-  profileImage: {
-    backgroundColor: 'rgba(184, 245, 244, 1)',
-  },
-  formContainer: {
-    position: 'absolute',
-    top: height * 0.07,
-    width: '100%',
-    borderRadius: 10,
-    paddingVertical: 0,
-    elevation: 2,
-    paddingHorizontal: 20,
-    marginBottom: height * 0.05,
-  },
-  labelContainer: {
-    top: 10,
-    zIndex: 1,
-    left: 5,
-    backgroundColor: '#84e8f8', // Blue background color
-    borderRadius: 10,
-    paddingVertical: 0,
-    paddingHorizontal: 10,
-    alignSelf: 'flex-start',
-  },
-  label: {
-    color: '#3d7b85', // White text color
-    fontSize: 16,
-  },
-  inputContainer: {
-    backgroundColor: '#FFFFFF', // Set a light background color
-    borderColor: '#d3f9ff', // Set border color
-    shadowColor: '#84e8f8',
-    borderWidth: 1, // Border width
-    borderRadius: 20, // Rounded corners
-    padding: 15, // Inner padding
-    marginBottom: 15, // Space below the input field
-    shadowOffset: {
-      width: 2,
-      height: 7, // Move shadow downwards
-    },
-    shadowOpacity: 1, // Shadow opacity
-    elevation: 5, // For Android shadow
-  },
-  inputField: {
-    fontSize: 16,
-    color: '#333',
-  },
-  scrollableInput: {
-    height: 80, // Set a maximum height to restrict the growth of the input field
-  },
-  submitButton: {
-    width: width * 0.5,
-    alignSelf: 'center',
-    backgroundColor: '#8DDE0E',
-    borderRadius: 30,
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    elevation: 3,
-  },
-  submitButtonText: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#FFFFFF',
-    fontFamily: 'Montserrat-Bold',
-    textAlign: 'center',
-  },
-  trendingQuestionsContainer: {
-    backgroundColor: '#eff9ff',
-    paddingLeft: 15,
-    padding: 5,
-  },
-  questionHeaderContainer: {
-    borderBottomWidth: 1, // Change to 1 or desired thickness
-    borderBottomColor: '#5b5b5b', // Border color for division
-    paddingVertical: 10, // Padding above and below the text
-  },
-  trendingQuestionsHeader: {
-    color: '#5b5b5b',
-    fontSize: 18,
-    fontFamily: 'Montserrat-Bold',
-    marginBottom: 10,
-  },
-  questionContainer: {
-    borderBottomWidth: 1, // Change to 1 or desired thickness
-    borderBottomColor: '#5b5b5b', // Border color for division
-    paddingVertical: 10, // Padding above and below the text
-  },
-  questionRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  arrowIconContainer: {
-    backgroundColor: '#4dc4f1', // Circle background color
-    borderRadius: 20, // Make it a circle
-    padding: 5, // Padding inside the circle
-    marginRight: 20, // Space between icon and question text
-  },
-  arrowColor: {
-    color: '#84e8f8',
-  },
-  arrowIcon: {
-    width: 20,
-    height: 20, // Adjust size as necessary
-  },
-  trendingQuestion: {
-    width: width * 0.8,
-    color: '#5b5b5b',
-    fontSize: 16,
-    fontFamily: 'Montserrat-Medium',
-    paddingVertical: 5, // Add padding above and below each question
-  },
-});
 
 export default GuestUserQuestionScreen;

@@ -6,6 +6,7 @@ import SplashScreen from 'react-native-splash-screen';
 import { styles } from './src/styles/styles';
 import Tabs from './src/navigation/Tabs';
 import IntroScreen from './src/screens/IntroScreen';
+import AnswerScreen from './src/screens/AnswerScreen';
 
 // Create the Stack Navigator
 const Stack = createStackNavigator();
@@ -32,6 +33,8 @@ function App() {
               component={IntroScreen}
               options={{ headerShown: false }}  // Hide header for IntroScreen
             />
+            <Stack.Screen name="AnswerScreen" component={AnswerScreen}  options={{ headerShown: false }} />
+
             {/* Then navigate to the main Tab Navigator */}
             <Stack.Screen
               name="Main"
