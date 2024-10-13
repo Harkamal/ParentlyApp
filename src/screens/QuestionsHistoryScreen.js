@@ -36,8 +36,6 @@ function QuestionsHistoryScreen({ route }) {
         const data = await getQuestionsHistoryQuery(body); // Call the API function (await for async response)
         console.log(data);
         setResponseMessage(data || ""); // Set response message from API
-        // Navigate to the AnswerScreen only if the API response is successful
-       //  navigation.navigate('AnswerScreen', { responseMessage: data.message, question: query, childAge: childAge });
       } catch (error) {
         console.error('Error:', error);
       } finally {

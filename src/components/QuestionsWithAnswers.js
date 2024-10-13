@@ -11,7 +11,7 @@ const QuestionsWithAnswers = ({ questionsWithAnswers }) => {
   const navigation = useNavigation();
 
   const handleQuestionPress = (questionWithAnswer) => {
-    navigation.navigate('AnswerScreen', {
+    navigation.navigate('Answer', {
       responseMessage: questionWithAnswer.answer,
       question: questionWithAnswer.question,
       childAge: questionWithAnswer.childAgeInMonths,
