@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import { guestUserQuestionScreenStyles } from '../styles/styles';
 import { useNavigation } from '@react-navigation/native';
+import {FormatChildAge} from './FormatChildAge';
 
 const QuestionsWithAnswers = ({ questionsWithAnswers }) => {
   const navigation = useNavigation();
@@ -35,7 +36,7 @@ const QuestionsWithAnswers = ({ questionsWithAnswers }) => {
               style={guestUserQuestionScreenStyles.questionContainer}
             >
               <View style={guestUserQuestionScreenStyles.questionRow}>
-                <Text style={guestUserQuestionScreenStyles.trendingQuestion}>{item.question}(Child Age: {item.childAgeInMonths} Months)</Text>
+                <Text style={guestUserQuestionScreenStyles.trendingQuestion}>{item.question}(Child Age: {FormatChildAge(item.childAgeInMonths)})</Text>
                 <View style={guestUserQuestionScreenStyles.arrowIconContainer}>
                   <Text style={guestUserQuestionScreenStyles.arrowColor}> > </Text>
                 </View>

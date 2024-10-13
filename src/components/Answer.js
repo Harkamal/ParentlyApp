@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, StyleSheet, Dimensions,  TouchableOpacity, TextInput, ScrollView } from 'react-native';
 import MarkdownDisplay from '../components/MarkdownDisplay';
 import { useNavigation } from '@react-navigation/native';
+import { FormatChildAge } from './FormatChildAge';
 
 const { width, height } = Dimensions.get('window');
 
@@ -27,8 +28,10 @@ function Answer({ route }) {
         scrollEnabled={true}
       />
       <ScrollView style={styles.responseContainer}>
-        {(childAge !== 'undefined') && (
-          <Text style={styles.tipsHeader}>Tips: Child's Age {childAge} months</Text>
+        {childAge !== undefined && (
+          <Text style={styles.tipsHeader}>
+            Tips: Child's Age {FormatChildAge(childAge)}
+          </Text>
         )}
         <MarkdownDisplay content={responseMessage} />
       </ScrollView>
