@@ -55,10 +55,10 @@ function GuestUserQuestionScreen() {
     try {
       const data = await postParentingAssistantQuery(body); // Call the API function
       setResponseMessage(data.message || ''); // Set response message
-      navigation.navigate('Answer', { responseMessage: data.message, question: query, childAge: childAge });
+      navigation.navigate('Answer', { responseMessage: data.message, success: data.success, question: query, childAge: childAge });
     } catch (error) {
       console.error('Error:', error);
-      setResponseMessage('Sorry! An error occurred while trying to submit your query.');
+        setResponseMessage('Sorry! An error occurred while trying to submit your query.');
     } finally {
       setLoading(false); // Set loading to false when API call is done
     }

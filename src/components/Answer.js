@@ -8,7 +8,7 @@ const { width, height } = Dimensions.get('window');
 
 function Answer({ route }) {
   const navigation = useNavigation(); // Initialize navigation
-  const { responseMessage, question, childAge } = route.params;
+  const { responseMessage, successResponse, question, childAge } = route.params;
 
   return (
     <View style={styles.answerContainer}>
@@ -28,7 +28,7 @@ function Answer({ route }) {
         scrollEnabled={true}
       />
       <ScrollView style={styles.responseContainer}>
-        {childAge !== undefined && (
+        {childAge !== undefined && successResponse && (
           <Text style={styles.tipsHeader}>
             Tips: Child's Age {FormatChildAge(childAge)}
           </Text>
