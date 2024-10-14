@@ -4,7 +4,6 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  StyleSheet,
 } from 'react-native';
 import { introScreenStyles } from '../styles/styles';
 import BackgroundWrapper from '../components/BackgroundWrapper';

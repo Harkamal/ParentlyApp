@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {
   View,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -20,8 +19,6 @@ import { useNavigation } from '@react-navigation/native'; // Import the navigati
 import DropDownPicker from 'react-native-dropdown-picker';
 import { guestUserQuestionScreenStyles } from '../styles/styles';
 import TrendingQuestions from '../components/TrendingQuestions';
-
-const { width, height } = Dimensions.get('window');
 
 function GuestUserQuestionScreen() {
   const [responseMessage, setResponseMessage] = useState('');

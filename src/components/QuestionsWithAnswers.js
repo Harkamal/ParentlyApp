@@ -4,7 +4,7 @@ import {
   Text,
   TouchableOpacity, StyleSheet,
 } from 'react-native';
-import { guestUserQuestionScreenStyles } from '../styles/styles';
+import { questionHistoryScreenStyles} from '../styles/styles';
 import { useNavigation } from '@react-navigation/native';
 import {FormatChildAge} from './FormatChildAge';
 
@@ -20,10 +20,10 @@ const QuestionsWithAnswers = ({ questionsWithAnswers }) => {
   };
 
   return (
-    <View style={styles.questionHistoryContainer}>
-      <View style={guestUserQuestionScreenStyles.trendingQuestionsContainer}>
-        <TouchableOpacity style={guestUserQuestionScreenStyles.questionHeaderContainer}>
-          <Text style={guestUserQuestionScreenStyles.trendingQuestionsHeader}>
+    <View style={questionHistoryScreenStyles.questionHistoryContainer}>
+      <View style={questionHistoryScreenStyles.trendingQuestionsContainer}>
+        <TouchableOpacity style={questionHistoryScreenStyles.questionHeaderContainer}>
+          <Text style={questionHistoryScreenStyles.trendingQuestionsHeader}>
             Your Questions
           </Text>
         </TouchableOpacity>
@@ -33,19 +33,19 @@ const QuestionsWithAnswers = ({ questionsWithAnswers }) => {
             <TouchableOpacity
               key={index}
               onPress={() => handleQuestionPress(item)}
-              style={guestUserQuestionScreenStyles.questionContainer}
+              style={questionHistoryScreenStyles.questionContainer}
             >
-              <View style={guestUserQuestionScreenStyles.questionRow}>
-                <Text style={guestUserQuestionScreenStyles.trendingQuestion}>{item.question}(Child Age: {FormatChildAge(item.childAgeInMonths)})</Text>
-                <View style={guestUserQuestionScreenStyles.arrowIconContainer}>
-                  <Text style={guestUserQuestionScreenStyles.arrowColor}> > </Text>
+              <View style={questionHistoryScreenStyles.questionRow}>
+                <Text style={questionHistoryScreenStyles.trendingQuestion}>{item.question}(Child Age: {FormatChildAge(item.childAgeInMonths)})</Text>
+                <View style={questionHistoryScreenStyles.arrowIconContainer}>
+                  <Text style={questionHistoryScreenStyles.arrowColor}> > </Text>
                 </View>
               </View>
             </TouchableOpacity>
           ))
         ) : (
           // Fallback message when no questions exist
-          <Text style={styles.noQuestionsText}>
+          <Text style={questionHistoryScreenStyles.noQuestionsText}>
             It looks like you haven’t asked any questions yet. Start exploring and let us help with your parenting journey!
           </Text>
         )}
@@ -56,16 +56,3 @@ const QuestionsWithAnswers = ({ questionsWithAnswers }) => {
 
 export default QuestionsWithAnswers;
 
-const styles = StyleSheet.create({
-  questionHistoryContainer: {
-    backgroundColor: '#eff9ff',
-    flex: 1,
-    justifyContent: 'flex-start',
-    paddingTop: 40,
-  },
-  noQuestionsText: {
-    padding: 10,
-    fontSize: 16,
-    fontFamily: 'Montserrat-Medium',
-  },
-});
