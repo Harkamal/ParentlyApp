@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, KeyboardAvoidingView } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { getQuestionsHistoryQuery } from '../api/api';
 import Loader from '../components/Loader';
 import { guestUserQuestionScreenStyles } from '../styles/styles';
@@ -36,8 +36,6 @@ function QuestionsHistoryScreen({ route }) {
         const data = await getQuestionsHistoryQuery(body); // Call the API function (await for async response)
         console.log(data);
         setResponseMessage(data || ""); // Set response message from API
-        // Navigate to the AnswerScreen only if the API response is successful
-       //  navigation.navigate('AnswerScreen', { responseMessage: data.message, question: query, childAge: childAge });
       } catch (error) {
         console.error('Error:', error);
       } finally {
@@ -50,11 +48,13 @@ function QuestionsHistoryScreen({ route }) {
 
   return (
     <KeyboardAvoidingView style={guestUserQuestionScreenStyles.mainContainer}>
+      <ScrollView contentContainerStyle={guestUserQuestionScreenStyles.scrollContainer}>
       {loading ? (
-        <Loader size={50} /> // Show the loader while loading
-      ) : (
-        <QuestionsWithAnswers questionsWithAnswers={responseMessage} /> // Show the component when the response is ready
-      )}
+          <Loader size={50} /> // Show the loader while loading
+        ) : (
+          <QuestionsWithAnswers questionsWithAnswers={responseMessage} /> // Show the component when the response is ready
+        )}
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
