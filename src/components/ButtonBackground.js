@@ -1,6 +1,6 @@
 import React from 'react';
 import { ImageBackground, StyleSheet } from 'react-native';
-import {componentButtonBackgroundStyles} from '../styles/styles';
+import {componentButtonBackgroundStyles} from '../styles/componentButtonBackgroundStyles';
 
 const ButtonBackground = ({ children }) => {
 return (

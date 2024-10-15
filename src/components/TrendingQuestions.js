@@ -4,7 +4,7 @@ import {
   Text,
   TouchableOpacity,
 } from 'react-native';
-import { guestUserQuestionScreenStyles } from '../styles/styles';
+import { guestUserQuestionScreenStyles } from '../styles/guestUserQuestionScreenStyles';
 
 const TrendingQuestions = ({ query, setQuery }) => {
   const [isExpanded, setIsExpanded] = useState(false);

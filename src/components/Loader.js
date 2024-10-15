@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Lottie from 'lottie-react-native';
-import {componentLoaderStyles} from '../styles/styles'; // Ensure this package is installed
+import {componentLoaderStyles} from '../styles/componentLoaderStyles'; // Ensure this package is installed
 
 const Loader = ({ size = 100 }) => {
   return (

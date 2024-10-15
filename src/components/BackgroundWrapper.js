@@ -1,6 +1,6 @@
 import React from 'react';
 import { ImageBackground } from 'react-native';
-import {componentBackgroundWrapperStyles} from '../styles/styles';
+import {componentBackgroundWrapperStyles} from '../styles/componentBackgroundWrapperStyles';
 
 const BackgroundWrapper = ({ children }) => {
   return (

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Dimensions, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { getQuestionsHistoryQuery } from '../api/api';
 import Loader from '../components/Loader';
-import { guestUserQuestionScreenStyles } from '../styles/styles';
+import { guestUserQuestionScreenStyles } from '../styles/guestUserQuestionScreenStyles';
 import QuestionsWithAnswers from '../components/QuestionsWithAnswers';
 import DeviceInfo from 'react-native-device-info';
 

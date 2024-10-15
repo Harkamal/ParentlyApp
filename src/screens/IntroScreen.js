@@ -5,7 +5,7 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import { introScreenStyles } from '../styles/styles';
+import { introScreenStyles } from '../styles/introScreenStyles';
 import BackgroundWrapper from '../components/BackgroundWrapper';
 
 const roboImage = require('../../assets/images/roboWithSearchBar.png');

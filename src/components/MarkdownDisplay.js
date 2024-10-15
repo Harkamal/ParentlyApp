@@ -2,7 +2,7 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import Markdown from 'react-native-markdown-display';
-import { componentMarkdownStyles } from '../styles/styles';
+import { componentMarkdownStyles } from '../styles/componentMarkdownStyles';
 
 const MarkdownDisplay = ({ content }) => {
   // Handle undefined content by ensuring it's a string

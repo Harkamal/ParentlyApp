@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   KeyboardAvoidingView,
+  ShadowPropSlider,
   Image,
   Dimensions,
 } from 'react-native';
@@ -17,7 +18,7 @@ import {postParentingAssistantQuery} from '../api/api';
 import Loader from '../components/Loader'; // Import DeviceInfo
 import { useNavigation } from '@react-navigation/native'; // Import the navigation hook
 import DropDownPicker from 'react-native-dropdown-picker';
-import { guestUserQuestionScreenStyles } from '../styles/styles';
+import { guestUserQuestionScreenStyles } from '../styles/guestUserQuestionScreenStyles';
 import TrendingQuestions from '../components/TrendingQuestions';
 
 function GuestUserQuestionScreen() {

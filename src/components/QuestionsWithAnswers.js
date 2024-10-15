@@ -4,7 +4,7 @@ import {
   Text,
   TouchableOpacity, StyleSheet,
 } from 'react-native';
-import { questionHistoryScreenStyles} from '../styles/styles';
+import { questionHistoryScreenStyles} from '../styles/questionHistoryScreenStyles';
 import { useNavigation } from '@react-navigation/native';
 import {FormatChildAge} from './FormatChildAge';
 
