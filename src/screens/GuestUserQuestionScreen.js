@@ -49,7 +49,7 @@ function GuestUserQuestionScreen() {
   }, []);
 
   const handleSubmit = async () => {
-    const body = { query, child_age: childAge, device_id: deviceId, preferredLanguage: language };
+    const body = { query: query, child_age_in_months: childAge, device_id: deviceId, preferred_language: language };
 
     setLoading(true); // Set loading to true when API call starts
 
@@ -110,6 +110,22 @@ function GuestUserQuestionScreen() {
             I’m here to help! Please share your questions about your child below.
           </Text>
           <View style={guestUserQuestionScreenStyles.labelContainer}>
+            <Text style={guestUserQuestionScreenStyles.label}>Your Preferred Language for the answer</Text>
+          </View>
+          <View style={[guestUserQuestionScreenStyles.inputContainer, open && { zIndex: 1000 }]}>
+            <DropDownPicker
+              open={open}
+              value={language}
+              items={items}
+              setOpen={setOpen}
+              setValue={setLanguage}
+              setItems={setItems}
+              placeholder="Choose a language"
+              style={guestUserQuestionScreenStyles.dropdown}
+              labelStyle={guestUserQuestionScreenStyles.labelStyle}
+            />
+          </View>
+          <View style={guestUserQuestionScreenStyles.labelContainer}>
             <Text style={guestUserQuestionScreenStyles.label}>Child's Age</Text>
           </View>
           <TouchableOpacity onPress={showDatePicker} style={guestUserQuestionScreenStyles.inputContainer}>
@@ -128,22 +144,6 @@ function GuestUserQuestionScreen() {
             multiline={true}
             scrollEnabled={true}
           />
-          </View>
-          <View style={guestUserQuestionScreenStyles.labelContainer}>
-            <Text style={guestUserQuestionScreenStyles.label}>Your Preferred Language for the answer</Text>
-          </View>
-          <View style={[guestUserQuestionScreenStyles.inputContainer, open && { zIndex: 1000 }]}>
-            <DropDownPicker
-              open={open}
-              value={language}
-              items={items}
-              setOpen={setOpen}
-              setValue={setLanguage}
-              setItems={setItems}
-              placeholder="Choose a language"
-              style={guestUserQuestionScreenStyles.dropdown}
-              labelStyle={guestUserQuestionScreenStyles.labelStyle}
-            />
           </View>
           <TouchableOpacity style={guestUserQuestionScreenStyles.submitButton}  onPress={handleSubmit}>
             <Text style={guestUserQuestionScreenStyles.submitButtonText}>SUBMIT</Text>
