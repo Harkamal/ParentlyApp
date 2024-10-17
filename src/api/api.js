@@ -48,3 +48,15 @@ export const getQuestionsHistoryQuery = async (queryData) => {
 
   return handleResponse(response);
 };
+
+export const postSaveQuestion = async (queryData) => {
+  const response = await fetch(API_ENDPOINTS.SAVE_QUESTION, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(queryData),
+  });
+
+  return handleResponse(response);
+};

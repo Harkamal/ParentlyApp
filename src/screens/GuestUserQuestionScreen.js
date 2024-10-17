@@ -56,7 +56,8 @@ function GuestUserQuestionScreen() {
     try {
       const data = await postParentingAssistantQuery(body); // Call the API function
       setResponseMessage(data.message || ''); // Set response message
-      navigation.navigate('Answer', { responseMessage: data.message, success: data.success,  showSaveButton: data.success, question: query, childAge: childAge });
+      console.log(data);
+      navigation.navigate('Answer', { response: data.message, success: data.success,  showSaveButton: data.success,  childAge: childAge });
     } catch (error) {
       console.error('Error:', error);
         setResponseMessage('Sorry! An error occurred while trying to submit your query.');

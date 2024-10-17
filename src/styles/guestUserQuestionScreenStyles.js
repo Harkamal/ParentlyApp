@@ -79,6 +79,7 @@ export const guestUserQuestionScreenStyles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 40,
     bottom: '3%',
+    top: '0%',
     elevation: 3,
   },
   submitButton: {

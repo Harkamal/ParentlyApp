@@ -13,10 +13,9 @@ const QuestionsWithAnswers = ({ questionsWithAnswers }) => {
 
   const handleQuestionPress = (questionWithAnswer) => {
     navigation.navigate('Answer', {
-      responseMessage: questionWithAnswer.answer,
+      response: questionWithAnswer,
       success: true,
       showSaveButton: false,
-      question: questionWithAnswer.question,
       childAge: questionWithAnswer.childAgeInMonths,
     });
   };
