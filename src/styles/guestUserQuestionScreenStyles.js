@@ -88,25 +88,25 @@ export const guestUserQuestionScreenStyles = StyleSheet.create({
     textAlign: 'center',
   },
   trendingQuestionsContainer: {
+    flex: 1,
+    marginTop: '3%',
     backgroundColor: '#eff9ff',
-    paddingLeft: 15,
-    padding: 5,
+    paddingLeft: 5,
+    paddingBottom: 30,
   },
   questionHeaderContainer: {
+    paddingBottom: 10,
     borderBottomWidth: 1, // Change to 1 or desired thickness
     borderBottomColor: '#5b5b5b', // Border color for division
-    paddingVertical: 10, // Padding above and below the text
   },
   trendingQuestionsHeader: {
     color: '#5b5b5b',
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: 'Montserrat-Bold',
-    marginBottom: 10,
   },
   questionContainer: {
     borderBottomWidth: 1, // Change to 1 or desired thickness
     borderBottomColor: '#5b5b5b', // Border color for division
-    paddingVertical: 10, // Padding above and below the text
   },
   questionRow: {
     flexDirection: 'row',
@@ -116,7 +116,7 @@ export const guestUserQuestionScreenStyles = StyleSheet.create({
     backgroundColor: '#4dc4f1', // Circle background color
     borderRadius: 20, // Make it a circle
     padding: 5, // Padding inside the circle
-    marginRight: 20, // Space between icon and question text
+    left: 10, // Space between icon and question text
   },
   arrowColor: {
     color: '#84e8f8',
@@ -132,7 +132,7 @@ export const guestUserQuestionScreenStyles = StyleSheet.create({
   trendingQuestion: {
     width: width * 0.8,
     color: '#5b5b5b',
-    fontSize: 16,
+    fontSize: 15,
     fontFamily: 'Montserrat-Medium',
     paddingVertical: 5, // Add padding above and below each question
   },

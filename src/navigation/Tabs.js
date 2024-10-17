@@ -1,34 +1,91 @@
 import React from 'react';
+import { View, Image, TouchableOpacity, StyleSheet, Dimensions, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { styles } from '../styles/styles';
 import GuestUserQuestionScreen from '../screens/GuestUserQuestionScreen';
 import QuestionsHistoryScreen from '../screens/QuestionsHistoryScreen';
+import {tabsNavigationStyles} from '../styles/TabsNavigationStyles';
 
 // Create the Tab Navigator
 const Tab = createBottomTabNavigator();
+const { width } = Dimensions.get('window');
 
+// Custom Tab Bar Component
+const CustomTabBar = ({ state, descriptors, navigation }) => {
+  return (
+    <View style={tabsNavigationStyles.tabBarContainer}>
+      {/* History Tab on the Left */}
+      <TouchableOpacity
+        accessibilityRole="button"
+        onPress={() => navigation.navigate('History')}
+        style={[
+          tabsNavigationStyles.tab,
+          state.index === 1 ? tabsNavigationStyles.tabActive : null, // Check if this is the active tab
+        ]}
+      >
+        <Image
+          source={require('../../assets/images/icHistory.png')}
+          style={[
+            tabsNavigationStyles.tabIcon,
+            state.index === 1 ? tabsNavigationStyles.tabIconActive : null, // Active icon style
+          ]}
+          resizeMode="contain"
+        />
+        <Text
+          style={[
+            tabsNavigationStyles.tabLabel,
+            state.index === 1 ? tabsNavigationStyles.tabLabelActive : null, // Active label style
+          ]}
+        >
+          History
+        </Text>
+      </TouchableOpacity>
+
+      {/* Center button */}
+      <TouchableOpacity
+        style={tabsNavigationStyles.centerCircle}
+        onPress={() => navigation.navigate('Home')}
+      >
+        <Image
+          source={require('../../assets/images/icHome.png')} // The central icon
+          style={tabsNavigationStyles.centerIcon}
+        />
+      </TouchableOpacity>
+
+      {/* Settings Tab on the Right */}
+      <TouchableOpacity
+        accessibilityRole="button"
+        onPress={() => navigation.navigate('History')}
+        style={[
+          tabsNavigationStyles.tab,
+          state.index === 1 ? tabsNavigationStyles.tabActive : null, // Check if this is the active tab
+        ]}
+      >
+        <Image
+          source={require('../../assets/images/icSettings.png')}
+          style={[
+            tabsNavigationStyles.tabIcon,
+            state.index === 1 ? tabsNavigationStyles.tabIconActive : null, // Active icon style
+          ]}
+          resizeMode="contain"
+        />
+        <Text
+          style={[
+            tabsNavigationStyles.tabLabel,
+            state.index === 1 ? tabsNavigationStyles.tabLabelActive : null, // Active label style
+          ]}
+        >
+          Settings
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+};
 // Define your Tab Navigator
 function Tabs() {
-  const iconMap = {
-    Home: 'home',
-    History: 'bulb',
-  };
-
   return (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarIcon: ({ color, size }) => {
-          const iconName = iconMap[route.name];
-          return <Icon name={iconName} size={size} color={color} />;
-        },
-        tabBarActiveTintColor: styles.tabActiveIcon.color,
-        tabBarInactiveTintColor: styles.tabInactiveIcon.color,
-      })}
-    >
-      <Tab.Screen name="Home" component={GuestUserQuestionScreen} />
-      <Tab.Screen name="History" component={QuestionsHistoryScreen} />
+    <Tab.Navigator tabBar={props => <CustomTabBar {...props}  />}>
+      <Tab.Screen name="Home" component={GuestUserQuestionScreen} options={{ headerShown: false }} />
+      <Tab.Screen name="History" component={QuestionsHistoryScreen} options={{ headerShown: false }} />
     </Tab.Navigator>
   );
 }

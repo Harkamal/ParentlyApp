@@ -3,11 +3,13 @@ import {
   View,
   Text,
   TouchableOpacity,
+  ScrollView,
+  KeyboardAvoidingView,
 } from 'react-native';
 import { guestUserQuestionScreenStyles } from '../styles/guestUserQuestionScreenStyles';
 
 const TrendingQuestions = ({ query, setQuery }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
 
   const trendingQuestions = [
     'What are some healthy snack options for toddlers that are easy to prepare?',
@@ -16,7 +18,8 @@ const TrendingQuestions = ({ query, setQuery }) => {
   ];
 
   const toggleExpanded = () => {
-    setIsExpanded(!isExpanded);
+    // put !isExpanded if collapse expand need to be enabled.
+    setIsExpanded(isExpanded);
   };
 
   const handleTrendingQuestionPress = (selectedQuestion) => {
@@ -24,11 +27,12 @@ const TrendingQuestions = ({ query, setQuery }) => {
   };
 
   return (
-    <View style={guestUserQuestionScreenStyles.trendingQuestionsContainer}>
+    <KeyboardAvoidingView style={guestUserQuestionScreenStyles.trendingQuestionsContainer}>
+      <ScrollView contentContainerStyle={guestUserQuestionScreenStyles.scrollContainer}>
+      <View style={guestUserQuestionScreenStyles.trendingQuestionsContainer}>
       <TouchableOpacity onPress={toggleExpanded} style={guestUserQuestionScreenStyles.questionHeaderContainer}>
         <Text style={guestUserQuestionScreenStyles.trendingQuestionsHeader}>
           Trending Questions
-          <Text style={guestUserQuestionScreenStyles.expandedCollapsedIndicator}>{isExpanded ? "▲" : "▼"}</Text>
         </Text>
       </TouchableOpacity>
 
@@ -56,6 +60,8 @@ const TrendingQuestions = ({ query, setQuery }) => {
         </TouchableOpacity>
       }
     </View>
+    </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
