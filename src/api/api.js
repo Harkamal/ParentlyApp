@@ -37,7 +37,7 @@ export const postParentingAssistantQuery = async (queryData) => {
   return handleResponse(response);
 };
 
-export const getQuestionsHistoryQuery = async (queryData) => {
+export const getSavedQuestions = async (queryData) => {
   const response = await fetch(API_ENDPOINTS.QUESTIONS_HISTORY, {
     method: 'POST',
     headers: {

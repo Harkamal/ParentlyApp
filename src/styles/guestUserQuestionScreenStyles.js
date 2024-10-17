@@ -71,17 +71,6 @@ export const guestUserQuestionScreenStyles = StyleSheet.create({
   scrollableInput: {
     height: 80, // Set a maximum height to restrict the growth of the input field
   },
-  saveButton: {
-    width: width * 0.5,
-    alignSelf: 'center',
-    backgroundColor: '#8DDE0E',
-    borderRadius: 30,
-    paddingVertical: 12,
-    paddingHorizontal: 40,
-    bottom: '3%',
-    top: '0%',
-    elevation: 3,
-  },
   submitButton: {
     width: width * 0.5,
     alignSelf: 'center',

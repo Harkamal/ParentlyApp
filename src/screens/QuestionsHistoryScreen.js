@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Dimensions, KeyboardAvoidingView, ScrollView } from 'react-native';
-import { getQuestionsHistoryQuery } from '../api/api';
+import { getSavedQuestions } from '../api/api';
 import Loader from '../components/Loader';
 import { guestUserQuestionScreenStyles } from '../styles/guestUserQuestionScreenStyles';
 import QuestionsWithAnswers from '../components/QuestionsWithAnswers';
@@ -31,7 +31,7 @@ function QuestionsHistoryScreen({ route }) {
 
       setLoading(true); // Set loading to true when API call starts
       try {
-        const data = await getQuestionsHistoryQuery(body); // Call the API function (await for async response)
+        const data = await getSavedQuestions(body); // Call the API function (await for async response)
         console.log(data);
         setResponseMessage(data || ""); // Set response message from API
       } catch (error) {

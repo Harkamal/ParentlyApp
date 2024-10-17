@@ -1,34 +1,55 @@
-import React, {useState} from 'react';
-import { View, Text, StyleSheet, Dimensions,  TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity, TextInput, ScrollView, Animated } from 'react-native';
 import MarkdownDisplay from '../components/MarkdownDisplay';
 import { useNavigation } from '@react-navigation/native';
 import { FormatChildAge } from './FormatChildAge';
-import {componentAnswersStyles} from '../styles/componentAnswersStyles';
-import {guestUserQuestionScreenStyles} from '../styles/guestUserQuestionScreenStyles';
-import {postSaveQuestion} from '../api/api';
+import { componentAnswersStyles } from '../styles/componentAnswersStyles';
+import { guestUserQuestionScreenStyles } from '../styles/guestUserQuestionScreenStyles';
+import { postSaveQuestion } from '../api/api';
 
 const { width, height } = Dimensions.get('window');
 
 function Answer({ route }) {
   const [responseMessage, setResponseMessage] = useState('');
   const [questionId, setQuestionId] = useState('');
-  const navigation = useNavigation(); // Initialize navigation
+  const navigation = useNavigation();
   const { response, successResponse, showSaveButton, childAge } = route.params;
+
+  // Fade animation state
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  // Function to show the response message and fade it away
+  const showMessage = (message) => {
+    setResponseMessage(message);
+    // Start fade in
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 500, // fade-in duration
+      useNativeDriver: true,
+    }).start(() => {
+      // After 3 seconds, fade out
+      setTimeout(() => {
+        Animated.timing(fadeAnim, {
+          toValue: 0,
+          duration: 500, // fade-out duration
+          useNativeDriver: true,
+        }).start();
+      }, 3000); // duration to show the message before fade-out
+    });
+  };
+
   const handleSave = async () => {
     const body = { question_id: response.question_id };
-
-    // setLoading(true); // Set loading to true when API call starts
-
     try {
-      const data = await postSaveQuestion(body); // Call the API function
-      if (data.success){
-        setResponseMessage('Your questions is saved successfully.');
+      const data = await postSaveQuestion(body);
+      if (data.success) {
+        showMessage('Your question is saved successfully.');
+      } else {
+        showMessage('Sorry! Your question could not be saved. Please try again.');
       }
     } catch (error) {
       console.error('Error:', error);
-      setResponseMessage('Sorry! Your question could not be saved. Please try again.');
-    } finally {
-      //setLoading(false); // Set loading to false when API call is done
+      showMessage('Sorry! Your question could not be saved. Please try again.');
     }
   };
 
@@ -40,9 +61,11 @@ function Answer({ route }) {
         onPress={() => navigation.goBack()}>
         <Text style={componentAnswersStyles.backButtonText}>{'<'}</Text>
       </TouchableOpacity>
+
       <View style={componentAnswersStyles.labelContainer}>
         <Text style={componentAnswersStyles.label}>Your Question</Text>
       </View>
+
       <TextInput
         style={[
           componentAnswersStyles.inputField,
@@ -55,6 +78,7 @@ function Answer({ route }) {
         editable={false}
         scrollEnabled={true}
       />
+
       <ScrollView style={componentAnswersStyles.responseContainer}>
         {childAge !== undefined && successResponse && (
           <Text style={componentAnswersStyles.tipsHeader}>
@@ -63,18 +87,29 @@ function Answer({ route }) {
         )}
         <MarkdownDisplay content={response.answer} />
       </ScrollView>
+
       {showSaveButton && !response.saved && (
         <TouchableOpacity
-          style={guestUserQuestionScreenStyles.saveButton}
+          style={componentAnswersStyles.saveButton}
           onPress={handleSave}>
-          <Text style={guestUserQuestionScreenStyles.submitButtonText}>
+          <Text style={componentAnswersStyles.saveButtonText}>
             SAVE
           </Text>
         </TouchableOpacity>
       )}
-      <Text>{responseMessage}</Text>
+
+      {/* Animated View for the response message */}
+      <Animated.View
+        style={[
+          componentAnswersStyles.popupContainer,
+          { opacity: fadeAnim }, // Bind opacity to animated value
+        ]}
+      >
+        <Text style={componentAnswersStyles.popupText}>{responseMessage}</Text>
+      </Animated.View>
     </View>
   );
 }
 
 export default Answer;
+
