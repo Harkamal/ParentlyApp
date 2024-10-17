@@ -4,12 +4,13 @@ import MarkdownDisplay from '../components/MarkdownDisplay';
 import { useNavigation } from '@react-navigation/native';
 import { FormatChildAge } from './FormatChildAge';
 import {componentAnswersStyles} from '../styles/componentAnswersStyles';
+import {guestUserQuestionScreenStyles} from '../styles/guestUserQuestionScreenStyles';
 
 const { width, height } = Dimensions.get('window');
 
 function Answer({ route }) {
   const navigation = useNavigation(); // Initialize navigation
-  const { responseMessage, successResponse, question, childAge } = route.params;
+  const { responseMessage, successResponse, showSaveButton, question, childAge } = route.params;
 
   return (
     <View style={componentAnswersStyles.answerContainer}>
@@ -36,6 +37,11 @@ function Answer({ route }) {
         )}
         <MarkdownDisplay content={responseMessage} />
       </ScrollView>
+      {showSaveButton && (
+        <TouchableOpacity style={guestUserQuestionScreenStyles.saveButton}  >
+          <Text style={guestUserQuestionScreenStyles.submitButtonText}>SAVE</Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 }

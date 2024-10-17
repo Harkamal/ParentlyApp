@@ -15,6 +15,7 @@ const QuestionsWithAnswers = ({ questionsWithAnswers }) => {
     navigation.navigate('Answer', {
       responseMessage: questionWithAnswer.answer,
       success: true,
+      showSaveButton: false,
       question: questionWithAnswer.question,
       childAge: questionWithAnswer.childAgeInMonths,
     });
