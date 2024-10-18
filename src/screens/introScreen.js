@@ -6,7 +6,7 @@ import {
   Image,
 } from 'react-native';
 import { introScreenStyles } from '../styles/introScreenStyles';
-import BackgroundWrapper from '../components/BackgroundWrapper';
+import BackgroundWrapper from '../components/backgroundWrapper';
 
 const roboImage = require('../../assets/images/roboWithSearchBar.png');
 

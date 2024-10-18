@@ -1,16 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity, TextInput, ScrollView, Animated } from 'react-native';
-import MarkdownDisplay from '../components/MarkdownDisplay';
+import MarkdownDisplay from './markdownDisplay';
 import { useNavigation } from '@react-navigation/native';
-import { FormatChildAge } from './FormatChildAge';
+import { FormatChildAge } from './formatChildAge';
 import { componentAnswersStyles } from '../styles/componentAnswersStyles';
 import { guestUserQuestionScreenStyles } from '../styles/guestUserQuestionScreenStyles';
 import { postSaveQuestion } from '../api/api';
+import {handleApiError} from '../util/errorHandler';
+import {showMessage} from '../util/showAnimatedMessage';
 
 const { width, height } = Dimensions.get('window');
 
 function Answer({ route }) {
   const [responseMessage, setResponseMessage] = useState('');
+  const [errorMessage, setErrorResponse] = useState('');
   const [questionId, setQuestionId] = useState('');
   const navigation = useNavigation();
   const { response, successResponse, showSaveButton, childAge } = route.params;
@@ -18,38 +21,18 @@ function Answer({ route }) {
   // Fade animation state
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
-  // Function to show the response message and fade it away
-  const showMessage = (message) => {
-    setResponseMessage(message);
-    // Start fade in
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 500, // fade-in duration
-      useNativeDriver: true,
-    }).start(() => {
-      // After 3 seconds, fade out
-      setTimeout(() => {
-        Animated.timing(fadeAnim, {
-          toValue: 0,
-          duration: 500, // fade-out duration
-          useNativeDriver: true,
-        }).start();
-      }, 3000); // duration to show the message before fade-out
-    });
-  };
-
   const handleSave = async () => {
     const body = { question_id: response.question_id };
     try {
       const data = await postSaveQuestion(body);
       if (data.success) {
-        showMessage('Your question is saved successfully.');
+        showMessage('Your question is saved successfully.', setErrorResponse, fadeAnim);
       } else {
-        showMessage('Sorry! Your question could not be saved. Please try again.');
+        showMessage('Sorry! Your question could not be saved. Please try again.', setErrorResponse, fadeAnim);
       }
     } catch (error) {
-      console.error('Error:', error);
-      showMessage('Sorry! Your question could not be saved. Please try again.');
+      const msg = handleApiError(error);
+      showMessage(msg, setErrorResponse. fadeAnim);
     }
   };
 
@@ -105,7 +88,7 @@ function Answer({ route }) {
           { opacity: fadeAnim }, // Bind opacity to animated value
         ]}
       >
-        <Text style={componentAnswersStyles.popupText}>{responseMessage}</Text>
+        <Text style={componentAnswersStyles.popupText}>{errorMessage}</Text>
       </Animated.View>
     </View>
   );

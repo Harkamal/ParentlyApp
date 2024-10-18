@@ -28,19 +28,6 @@ export const questionHistoryScreenStyles = StyleSheet.create({
   backButtonText: {
     fontSize: 30,
   },
-  helloGreeting: {
-    color: '#5b5b5b',
-    fontSize: 18,
-    fontFamily: 'Montserrat-Bold',
-    left: 65,
-  },
-  helloText: {
-    color: '#5b5b5b',
-    fontSize: 14,
-    fontFamily: 'Montserrat-Bold',
-    left: 65,
-    width: width * 0.8,
-  },
   mainContainer: {
     flex: 1,
   },

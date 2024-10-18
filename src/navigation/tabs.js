@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Image, TouchableOpacity, StyleSheet, Dimensions, Text } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import GuestUserQuestionScreen from '../screens/GuestUserQuestionScreen';
-import QuestionsHistoryScreen from '../screens/QuestionsHistoryScreen';
-import {tabsNavigationStyles} from '../styles/TabsNavigationStyles';
+import GuestUserQuestionScreen from '../screens/guestUserQuestionScreen';
+import QuestionsHistoryScreen from '../screens/questionsHistoryScreen';
+import {tabsNavigationStyles} from '../styles/tabsNavigationStyles';
 
 // Create the Tab Navigator
 const Tab = createBottomTabNavigator();

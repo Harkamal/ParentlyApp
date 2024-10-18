@@ -2,11 +2,11 @@ import React from 'react';
 import {
   View,
   Text,
-  TouchableOpacity, StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import { questionHistoryScreenStyles} from '../styles/questionHistoryScreenStyles';
 import { useNavigation } from '@react-navigation/native';
-import {FormatChildAge} from './FormatChildAge';
+import {FormatChildAge} from './formatChildAge';
 
 const QuestionsWithAnswers = ({ questionsWithAnswers }) => {
   const navigation = useNavigation();

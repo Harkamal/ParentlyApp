@@ -27,7 +27,7 @@ export const guestUserQuestionScreenStyles = StyleSheet.create({
   },
   formContainer: {
     position: 'absolute',
-    top: height * 0.07,
+    top: height * 0.06,
     width: '100%',
     borderRadius: 10,
     paddingVertical: 0,
@@ -47,7 +47,7 @@ export const guestUserQuestionScreenStyles = StyleSheet.create({
   },
   label: {
     color: '#3d7b85', // White text color
-    fontSize: 16,
+    fontSize: 14,
   },
   inputContainer: {
     backgroundColor: '#FFFFFF', // Set a light background color
@@ -55,7 +55,7 @@ export const guestUserQuestionScreenStyles = StyleSheet.create({
     shadowColor: '#84e8f8',
     borderWidth: 1, // Border width
     borderRadius: 20, // Rounded corners
-    padding: 15, // Inner padding
+    padding: 13, // Inner padding
     marginBottom: 15, // Space below the input field
     shadowOffset: {
       width: 2,
@@ -65,7 +65,7 @@ export const guestUserQuestionScreenStyles = StyleSheet.create({
     elevation: 5, // For Android shadow
   },
   inputField: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#333',
   },
   scrollableInput: {
@@ -109,6 +109,8 @@ export const guestUserQuestionScreenStyles = StyleSheet.create({
     borderBottomColor: '#5b5b5b', // Border color for division
   },
   questionRow: {
+    paddingTop: 2,
+    paddingBottom: 2,
     flexDirection: 'row',
     alignItems: 'center',
   },

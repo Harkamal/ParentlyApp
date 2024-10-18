@@ -1,4 +1,4 @@
-// MarkdownDisplay.js
+// markdownDisplay.js
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import Markdown from 'react-native-markdown-display';

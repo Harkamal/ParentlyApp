@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -8,21 +8,25 @@ import {
   KeyboardAvoidingView,
   ShadowPropSlider,
   Image,
-  Dimensions,
+  Dimensions, Animated,
 } from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import profileImage from '../../assets/images/Profile.png';
 import helloImage from '../../assets/images/icHi.png';
 import DeviceInfo from 'react-native-device-info';
 import {postParentingAssistantQuery} from '../api/api';
-import Loader from '../components/Loader'; // Import DeviceInfo
+import Loader from '../components/loader'; // Import DeviceInfo
 import { useNavigation } from '@react-navigation/native'; // Import the navigation hook
 import DropDownPicker from 'react-native-dropdown-picker';
 import { guestUserQuestionScreenStyles } from '../styles/guestUserQuestionScreenStyles';
-import TrendingQuestions from '../components/TrendingQuestions';
+import TrendingQuestions from '../components/trendingQuestions';
+import {handleApiError} from '../util/errorHandler';
+import {componentAnswersStyles} from '../styles/componentAnswersStyles';
+import {showMessage} from '../util/showAnimatedMessage';
 
 function GuestUserQuestionScreen() {
-  const [responseMessage, setResponseMessage] = useState('');
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const [errorMessage, setErrorResponse] = useState('');
   const [loading, setLoading] = useState(false); // State for loading
   const [deviceId, setDeviceId] = useState(''); // State for device ID
   const [childAge, setChildAge] = useState(0);
@@ -49,18 +53,32 @@ function GuestUserQuestionScreen() {
   }, []);
 
   const handleSubmit = async () => {
-    const body = { query: query, child_age_in_months: childAge, device_id: deviceId, preferred_language: language };
+    const body = {
+      query: query,
+      child_age_in_months: childAge,
+      device_id: deviceId,
+      preferred_language: language,
+    };
 
     setLoading(true); // Set loading to true when API call starts
 
     try {
       const data = await postParentingAssistantQuery(body); // Call the API function
-      setResponseMessage(data.message || ''); // Set response message
-      console.log(data);
-      navigation.navigate('Answer', { response: data.message, success: data.success,  showSaveButton: data.success,  childAge: childAge });
+
+      if (!data || !data.success) {
+        // Handle case where API returns an error
+        showMessage('Something went wrong', setErrorResponse, fadeAnim);
+      } else {
+        navigation.navigate('Answer', {
+          response: data.message,
+          success: data.success,
+          showSaveButton: data.success,
+          childAge: childAge,
+        });
+      }
     } catch (error) {
-      console.error('Error:', error);
-        setResponseMessage('Sorry! An error occurred while trying to submit your query.');
+      const msg = handleApiError(error); // Use the utility to get the error message
+      showMessage(msg, setErrorResponse, fadeAnim);
     } finally {
       setLoading(false); // Set loading to false when API call is done
     }
@@ -151,6 +169,15 @@ function GuestUserQuestionScreen() {
           </TouchableOpacity>
           {/* Loader */}
           {loading && <Loader size={50} />}
+          {/* Animated View for the response message */}
+          <Animated.View
+            style={[
+              componentAnswersStyles.popupContainer,
+              { opacity: fadeAnim }, // Bind opacity to animated value
+            ]}
+          >
+            <Text style={componentAnswersStyles.popupText}>{errorMessage}</Text>
+          </Animated.View>
         </View>
       </ScrollView>
 
